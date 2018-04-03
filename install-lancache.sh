@@ -164,11 +164,6 @@ mkdir -p /srv/lancache/logs/Access
 chown -R lancache:lancache /srv/lancache
 chmod -R 777 /srv/lancache
 
-#Enable Nginx
-/usr/sbin/update-rc.d -f nginx defaults
-systemctl enable nginx
-
-
 #unbound setup
 
 ## Preparing configuration for unbound
