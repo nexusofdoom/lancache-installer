@@ -1,6 +1,5 @@
 #!/bin/bash
 ## Set variables
-lc_dl_dir=$( pwd )
 lc_nginx_version=1.13.9
 lc_nginx_url=http://nginx.org/download/nginx-$lc_nginx_version.tar.gz
 lc_base_folder=/usr/local/lancache
@@ -168,7 +167,6 @@ chmod -R 777 /srv/lancache
 
 ## Preparing configuration for unbound
 sudo mkdir -p /$lc_base_folder/temp/unbound/
-cp $lc_dl_dir/lancache/unbound/unbound.conf $lc_base_folder/temp/unbound/
 sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/temp/unbound/unbound.conf
 sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_base_folder/temp/unbound/unbound.conf
 sed -i 's|lc-host-gw|'$lc_ip_gw'|g' $lc_base_folder/temp/unbound/unbound.conf
@@ -196,10 +194,6 @@ sudo cp $lc_base_folder/temp/unbound/unbound.conf /etc/unbound/unbound.conf
 cp unbound/unbound.conf /etc/unbound/unbound.conf
 #Replace the interfaces: section with the normal ip (not the virtual ones)
 #Replace all "A records" with the appropriate IPs (the virtual IPs for the appropriate caching service like in hosts file)
-
-## Copy The Base Files Over To Temp Folder
-cp $lc_dl_dir/lancache/hosts $lc_base_folder/temp/hosts
-cp $lc_dl_dir/lancache/interfaces $lc_base_folder/temp/interfaces
 
 ## Make the Necessary Changes For The New Host File
 sed -i 's|lc-hostname|'$lc_hn'|g' $lc_base_folder/temp/hosts
