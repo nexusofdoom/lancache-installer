@@ -16,19 +16,19 @@ lc_ip_googledns1=8.8.8.8
 lc_ip_googledns2=8.8.4.4
 lc_ip_logfile=ip.log
 lc_ip_gw=$( /sbin/ip route | awk '/default/ { print $3 }' )
-sudo apt-get install net-tools -y
+apt-get install net-tools -y
 
 ---------------------------------------------------------------------------------------------
 #Get Lancache Files from github keep track of the location where you download the files to
-sudo git clone -b master http://github.com/bntjah/lancache "$lc_git"
-sudo mv "$lc_git" "$lc_base_folder"
+git clone -b master http://github.com/bntjah/lancache "$lc_git"
+mv "$lc_git" "$lc_base_folder"
 ## Create the necessary folders
-sudo mkdir -p $lc_base_folder/config/
-sudo mkdir -p $lc_base_folder/data/
-sudo mkdir -p $lc_base_folder/logs/
-sudo mkdir -p $lc_base_folder/temp
+mkdir -p $lc_base_folder/config/
+mkdir -p $lc_base_folder/data/
+mkdir -p $lc_base_folder/logs/
+mkdir -p $lc_base_folder/temp
 #Get Lancache Files
-sudo chown -R $USER:$USER $lc_base_folder
+chown -R $USER:$USER $lc_base_folder
 #--------tested so far april 2nd 2018
 
 #Make lancache user
@@ -38,21 +38,21 @@ addgroup --system lancache
 usermod -aG lancache lancache
 
 ## Autostarting nginx
-sudo cp $lc_base_folder/init.d /etc/init.d/nginx 
-sudo chmod +x /etc/init.d/nginx
-sudo systemctl enable nginx
+cp "$lc_base_folder/init.d" /etc/init.d/nginx 
+chmod +x /etc/init.d/nginx
+systemctl enable nginx
 
 
 ## Autostarting sniproxy
-sudo cp $lc_base_folder/init.d /etc/init.d/sniproxy
-sudo chmod +x /etc/init.d/sniproxy
-sudo systemctl enable sniproxy
+cp "$lc_base_folder/init.d" /etc/init.d/sniproxy
+chmod +x /etc/init.d/sniproxy
+systemctl enable sniproxy
 ---------------------------------------------------------------------------------------------
 
 ## Divide the ip in variables
 lc_ip=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 lc_eth_int=$( ip route get 8.8.8.8 | awk '{print $5}' )
-lc_eth_netmask=$( sudo ifconfig $lc_eth_int |sed -rn '2s/ .*:(.*)$/\1/p' )
+lc_eth_netmask=$( ifconfig $lc_eth_int |sed -rn '2s/ .*:(.*)$/\1/p' )
 lc_ip_p1=$(echo ${lc_ip} | tr "." " " | awk '{ print $1 }')
 lc_ip_p2=$(echo ${lc_ip} | tr "." " " | awk '{ print $2 }')
 lc_ip_p3=$(echo ${lc_ip} | tr "." " " | awk '{ print $3 }')
@@ -135,38 +135,11 @@ echo Zenimax: $lc_ip_zenimax >>$lc_base_folder/logs/$lc_ip_logfile
 echo Digitalextremes: $lc_ip_digitalextremes >>$lc_base_folder/logs/$lc_ip_logfile
 echo Pearlabyss: $lc_ip_pearlabyss >>$lc_base_folder/logs/$lc_ip_logfile
 
-#Making Directorys for Data and Logs  
-echo making srv directorys 
-mkdir -p /srv/lancache/data/blizzard/
-mkdir -p /srv/lancache/data/microsoft/
-mkdir -p /srv/lancache/data/installs/
-mkdir -p /srv/lancache/data/other/
-mkdir -p /srv/lancache/data/tmp/
-mkdir -p /srv/lancache/data/hirez/
-mkdir -p /srv/lancache/data/origin/
-mkdir -p /srv/lancache/data/riot/
-mkdir -p /srv/lancache/data/gog/
-mkdir -p /srv/lancache/data/sony/
-mkdir -p /srv/lancache/data/steam/
-mkdir -p /srv/lancache/data/wargaming
-mkdir -p /srv/lancache/data/arenanetworks
-mkdir -p /srv/lancache/data/uplay
-mkdir -p /srv/lancache/data/glyph
-mkdir -p /srv/lancache/data/zenimax
-mkdir -p /srv/lancache/data/digitalextremes
-mkdir -p /srv/lancache/data/pearlabyss
-mkdir -p /srv/lancache/logs/Errors
-mkdir -p /srv/lancache/logs/Keys
-mkdir -p /srv/lancache/logs/Access
 
-#Change Ownership of folders
-chown -R lancache:lancache /srv/lancache
-chmod -R 777 /srv/lancache
 
 #unbound setup
-
 ## Preparing configuration for unbound
-sudo mkdir -p /$lc_base_folder/temp/unbound/
+mkdir -p /$lc_base_folder/temp/unbound/
 sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/temp/unbound/unbound.conf
 sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_base_folder/temp/unbound/unbound.conf
 sed -i 's|lc-host-gw|'$lc_ip_gw'|g' $lc_base_folder/temp/unbound/unbound.conf
@@ -188,7 +161,7 @@ sed -i 's|lc-host-zenimax|'$lc_ip_zenimax'|g' $lc_base_folder/temp/unbound/unbou
 sed -i 's|lc-host-digitalextremes|'$lc_ip_digitalextremes'|g' $lc_base_folder/temp/unbound/unbound.conf
 sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/temp/unbound/unbound.conf
 #copy config for unbound into folder
-sudo cp $lc_base_folder/temp/unbound/unbound.conf /etc/unbound/unbound.conf
+cp $lc_base_folder/temp/unbound/unbound.conf /etc/unbound/unbound.conf
 
 #Copy the unbound configuration from ~/lancache/unbound/unbound.conf to /etc/unbound/unbound.conf
 cp unbound/unbound.conf /etc/unbound/unbound.conf
@@ -239,27 +212,55 @@ sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/temp/interfa
 sed -i 's|lc-host-netmask|'$lc_eth_netmask'|g' $lc_base_folder/temp/interfaces
 sed -i 's|lc-host-vint|'$lc_eth_int'|g' $lc_base_folder/temp/interfaces
 
+#Making Directorys for Data and Logs  
+echo making srv directorys 
+mkdir -p /srv/lancache/data/blizzard/
+mkdir -p /srv/lancache/data/microsoft/
+mkdir -p /srv/lancache/data/installs/
+mkdir -p /srv/lancache/data/other/
+mkdir -p /srv/lancache/data/tmp/
+mkdir -p /srv/lancache/data/hirez/
+mkdir -p /srv/lancache/data/origin/
+mkdir -p /srv/lancache/data/riot/
+mkdir -p /srv/lancache/data/gog/
+mkdir -p /srv/lancache/data/sony/
+mkdir -p /srv/lancache/data/steam/
+mkdir -p /srv/lancache/data/wargaming
+mkdir -p /srv/lancache/data/arenanetworks
+mkdir -p /srv/lancache/data/uplay
+mkdir -p /srv/lancache/data/glyph
+mkdir -p /srv/lancache/data/zenimax
+mkdir -p /srv/lancache/data/digitalextremes
+mkdir -p /srv/lancache/data/pearlabyss
+mkdir -p /srv/lancache/logs/Errors
+mkdir -p /srv/lancache/logs/Keys
+mkdir -p /srv/lancache/logs/Access
+
+#Change Ownership of folders
+chown -R lancache:lancache /srv/lancache
+chmod -R 777 /srv/lancache
+
 ## Change the Proxy Bind in Lancache Configs
-sudo sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_nginx_loc/conf/vhosts-enabled/*.conf
+sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_nginx_loc/conf/vhosts-enabled/*.conf
 
 ## Moving Base Files to The Correct Locations
 if [ -f "$lc_base_folder/temp/hosts" ]; then
-	sudo mv /etc/hosts /etc/hosts.bak
-	sudo cp $lc_base_folder/temp/hosts /etc/hosts
+	mv /etc/hosts /etc/hosts.bak
+	cp $lc_base_folder/temp/hosts /etc/hosts
 fi
 
 if [ -f "$lc_base_folder/temp/interfaces" ]; then
-	sudo mv /etc/network/interfaces /etc/network/interfaces.bak
-	sudo mv $lc_base_folder/temp/interfaces /etc/network/interfaces
+	mv /etc/network/interfaces /etc/network/interfaces.bak
+	mv $lc_base_folder/temp/interfaces /etc/network/interfaces
 fi
 
 # Disabling IPv6
-#sudo echo "net.ipv6.conf.all.disable_ipv6=1" >/etc/sysctl.d/disable-ipv6.conf
-#sudo sysctl -p /etc/sysctl.d/disable-ipv6.conf
+#echo "net.ipv6.conf.all.disable_ipv6=1" >/etc/sysctl.d/disable-ipv6.conf
+#sysctl -p /etc/sysctl.d/disable-ipv6.conf
 
 # Updating local DNS resolvers
-sudo echo "nameserver $lc_ip_googledns1" > /etc/resolv.conf
-sudo echo "nameserver $lc_ip_googledns2" >> /etc/resolv.conf
+echo "nameserver $lc_ip_googledns1" > /etc/resolv.conf
+echo "nameserver $lc_ip_googledns2" >> /etc/resolv.conf
 
 
 #------- netdata install optional ---------
@@ -267,7 +268,7 @@ git clone https://github.com/firehol/netdata.git --depth=1 ~/temp-netdata
 #Next, change the directory to the cloned directory using the following command:
 cd ~/temp-netdata
 #Next, install the Netdata by running the netdata-installer.sh script as shown below:
-sudo ./netdata-installer.sh
+./netdata-installer.sh
 #Upgrade
 #Update script generated   : ./netdata-updater.sh
 echo Please reboot your system for the changes to take effect.
