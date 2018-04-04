@@ -26,7 +26,6 @@ mv "$lc_git" "$lc_base_folder"
 mkdir -p $lc_base_folder/config/
 mkdir -p $lc_base_folder/data/
 mkdir -p $lc_base_folder/logs/
-mkdir -p $lc_base_folder/temp
 #Get Lancache Files
 chown -R $USER:$USER $lc_base_folder
 #--------tested so far april 2nd 2018
@@ -101,14 +100,14 @@ lc_ip_apple=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_apple
 lc_incr_glyph=$((lc_ip_p4+14))
 lc_ip_glyph=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_glyph
 
-lc_incr_uplay=$((lc_ip_p4+15))
-lc_ip_uplay=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_zenimax
+lc_incr_zenimax=$((lc_ip_p4+15))
+lc_ip_zenimax=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_zenimax
 
-lc_incr_apple=$((lc_ip_p4+16))
-lc_ip_apple=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_digitalextremes
+lc_incr_digitalextremes=$((lc_ip_p4+16))
+lc_ip_digitalextremes=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_digitalextremes
 
-lc_incr_glyph=$((lc_ip_p4+17))
-lc_ip_glyph=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_pearlabyss
+lc_incr_pearlabyss=$((lc_ip_p4+17))
+lc_ip_pearlabyss=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_pearlabyss
 
 ## Put IP's in the log file
 echo [ lc_date ] Information !!! >>$lc_base_folder/logs/$lc_ip_logfile
@@ -135,82 +134,78 @@ echo Zenimax: $lc_ip_zenimax >>$lc_base_folder/logs/$lc_ip_logfile
 echo Digitalextremes: $lc_ip_digitalextremes >>$lc_base_folder/logs/$lc_ip_logfile
 echo Pearlabyss: $lc_ip_pearlabyss >>$lc_base_folder/logs/$lc_ip_logfile
 
-
-
 #unbound setup
 ## Preparing configuration for unbound
-mkdir -p /$lc_base_folder/temp/unbound/
-sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-gw|'$lc_ip_gw'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-blizzard|'$lc_ip_blizzard'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-hirez|'$lc_ip_hirez'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-gog|'$lc_ip_gog'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-glyph|'$lc_ip_glyph'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-microsoft|'$lc_ip_microsoft'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-origin|'$lc_ip_origin'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-riot|'$lc_ip_riot'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-steam|'$lc_ip_steam'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-sony|'$lc_ip_sony'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-enmasse|'$lc_ip_enmasse'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-wargaming|'$lc_ip_wargaming'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-uplay|'$lc_ip_uplay'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-zenimax|'$lc_ip_zenimax'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-digitalextremes|'$lc_ip_digitalextremes'|g' $lc_base_folder/temp/unbound/unbound.conf
-sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/temp/unbound/unbound.conf
+#mkdir -p /$lc_base_folder/unbound/
+sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-gw|'$lc_ip_gw'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-blizzard|'$lc_ip_blizzard'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-hirez|'$lc_ip_hirez'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-gog|'$lc_ip_gog'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-glyph|'$lc_ip_glyph'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-microsoft|'$lc_ip_microsoft'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-origin|'$lc_ip_origin'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-riot|'$lc_ip_riot'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-steam|'$lc_ip_steam'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-sony|'$lc_ip_sony'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-enmasse|'$lc_ip_enmasse'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-wargaming|'$lc_ip_wargaming'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-uplay|'$lc_ip_uplay'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-zenimax|'$lc_ip_zenimax'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-digitalextremes|'$lc_ip_digitalextremes'|g' $lc_base_folder/unbound/unbound.conf
+sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/unbound/unbound.conf
 #copy config for unbound into folder
-cp $lc_base_folder/temp/unbound/unbound.conf /etc/unbound/unbound.conf
+cp $lc_base_folder/unbound/unbound.conf /etc/unbound/unbound.conf
 
-#Copy the unbound configuration from ~/lancache/unbound/unbound.conf to /etc/unbound/unbound.conf
-cp unbound/unbound.conf /etc/unbound/unbound.conf
 #Replace the interfaces: section with the normal ip (not the virtual ones)
 #Replace all "A records" with the appropriate IPs (the virtual IPs for the appropriate caching service like in hosts file)
 
 ## Make the Necessary Changes For The New Host File
-sed -i 's|lc-hostname|'$lc_hn'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-blizzard|'$lc_ip_blizzard'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-hirez|'$lc_ip_hirez'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-glyph|'$lc_ip_glyph'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-gog|'$lc_ip_gog'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-microsoft|'$lc_ip_microsoft'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-origin|'$lc_ip_origin'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-riot|'$lc_ip_riot'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-steam|'$lc_ip_steam'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-sony|'$lc_ip_sony'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-enmasse|'$lc_ip_enmasse'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-uplay|'$lc_ip_uplay'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-wargaming|'$lc_ip_wargaming'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-zenimax|'$lc_ip_zenimax'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-digitalextremes|'$lc_ip_digitalextremes'|g' $lc_base_folder/temp/hosts
-sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/temp/hosts
+sed -i 's|lc-hostname|'$lc_hn'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-blizzard|'$lc_ip_blizzard'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-hirez|'$lc_ip_hirez'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-glyph|'$lc_ip_glyph'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-gog|'$lc_ip_gog'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-microsoft|'$lc_ip_microsoft'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-origin|'$lc_ip_origin'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-riot|'$lc_ip_riot'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-steam|'$lc_ip_steam'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-sony|'$lc_ip_sony'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-enmasse|'$lc_ip_enmasse'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-uplay|'$lc_ip_uplay'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-wargaming|'$lc_ip_wargaming'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-zenimax|'$lc_ip_zenimax'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-digitalextremes|'$lc_ip_digitalextremes'|g' $lc_base_folder/hosts
+sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/hosts
 
 ## Make the Necessary Changes For The New Interfaces File
-sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-gateway|'$lc_ip_gw'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-blizzard|'$lc_ip_blizzard'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-hirez|'$lc_ip_hirez'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-gog|'$lc_ip_gog'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-glyph|'$lc_ip_glyph'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-microsoft|'$lc_ip_microsoft'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-origin|'$lc_ip_origin'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-riot|'$lc_ip_riot'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-steam|'$lc_ip_steam'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-sony|'$lc_ip_sony'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-enmasse|'$lc_ip_enmasse'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-uplay|'$lc_ip_uplay'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-wargaming|'$lc_ip_wargaming'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-zenimax|'$lc_ip_zenimax'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-digitalextremes|'$lc_ip_digitalextremes'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-netmask|'$lc_eth_netmask'|g' $lc_base_folder/temp/interfaces
-sed -i 's|lc-host-vint|'$lc_eth_int'|g' $lc_base_folder/temp/interfaces
+sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-gateway|'$lc_ip_gw'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-blizzard|'$lc_ip_blizzard'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-hirez|'$lc_ip_hirez'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-gog|'$lc_ip_gog'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-glyph|'$lc_ip_glyph'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-microsoft|'$lc_ip_microsoft'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-origin|'$lc_ip_origin'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-riot|'$lc_ip_riot'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-steam|'$lc_ip_steam'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-sony|'$lc_ip_sony'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-enmasse|'$lc_ip_enmasse'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-uplay|'$lc_ip_uplay'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-wargaming|'$lc_ip_wargaming'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-zenimax|'$lc_ip_zenimax'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-digitalextremes|'$lc_ip_digitalextremes'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-netmask|'$lc_eth_netmask'|g' $lc_base_folder/interfaces
+sed -i 's|lc-host-vint|'$lc_eth_int'|g' $lc_base_folder/interfaces
 
 #Making Directorys for Data and Logs  
 echo making srv directorys 
@@ -244,19 +239,16 @@ chmod -R 777 /srv/lancache
 sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_nginx_loc/conf/vhosts-enabled/*.conf
 
 ## Moving Base Files to The Correct Locations
-if [ -f "$lc_base_folder/temp/hosts" ]; then
+if [ -f "$lc_base_folder/hosts" ]; then
 	mv /etc/hosts /etc/hosts.bak
-	cp $lc_base_folder/temp/hosts /etc/hosts
+	cp $lc_base_folder/hosts /etc/hosts
 fi
 
-if [ -f "$lc_base_folder/temp/interfaces" ]; then
+if [ -f "$lc_base_folder/interfaces" ]; then
 	mv /etc/network/interfaces /etc/network/interfaces.bak
-	mv $lc_base_folder/temp/interfaces /etc/network/interfaces
+	cp $lc_base_folder/interfaces /etc/network/interfaces
 fi
 
-# Disabling IPv6
-#echo "net.ipv6.conf.all.disable_ipv6=1" >/etc/sysctl.d/disable-ipv6.conf
-#sysctl -p /etc/sysctl.d/disable-ipv6.conf
 
 # Updating local DNS resolvers
 echo "nameserver $lc_ip_googledns1" > /etc/resolv.conf
