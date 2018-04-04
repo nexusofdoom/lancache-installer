@@ -25,6 +25,10 @@ echo '* hard nofile  65536' >> /etc/security/limits.conf
 
 
 #need to edit /etc/network/interfaces for eth0 if not named that
+echo ##############################################################################################
 echo Pleas edit /etc/network/interfaces to match your setup if not eth0 please change in that file
+echo ##############################################################################################
 sleep 3
+echo #########################################################################################
 echo Please reboot your system after you edit interfaces file for the changes to take effect.
+echo #########################################################################################
