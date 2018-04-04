@@ -17,6 +17,8 @@ lc_ip_googledns2=8.8.4.4
 lc_ip_logfile=ip.log
 lc_ip_gw=$( /sbin/ip route | awk '/default/ { print $3 }' )
 apt-get install net-tools -y
+#rm old lancache files 
+rm /usr/local/lancache -Rvf
 
 ---------------------------------------------------------------------------------------------
 #Get Lancache Files from github keep track of the location where you download the files to
@@ -257,3 +259,7 @@ fi
 # Updating local DNS resolvers
 echo "nameserver $lc_ip_googledns1" > /etc/resolv.conf
 echo "nameserver $lc_ip_googledns2" >> /etc/resolv.conf
+
+#done
+echo ###################################################################
+echo Lancache Installed pleae reboot and check services
