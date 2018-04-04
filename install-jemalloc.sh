@@ -7,3 +7,6 @@ cd jemalloc
 make && make dist
 checkinstall --pkgname=jemalloc --pkgversion="4-stable" --backup=no --deldoc=yes --fstrans=no --default
 make clean && make distclean
+echo ##########################################################################
+echo Please reboot your system for the changes to take effect.
+echo ##########################################################################
