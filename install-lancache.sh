@@ -51,7 +51,7 @@ systemctl enable sniproxy
 ## Divide the ip in variables
 lc_ip=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 lc_eth_int=$( ip route get 8.8.8.8 | awk '{print $5}' )
-lc_eth_netmask=$( ifconfig $lc_eth_int |sed -rn '2s/ .*:(.*)$/\1/p' )
+lc_eth_netmask=$( ifconfig eth0 | grep inet | grep netmask | cut -f13 -d ' ' )
 lc_ip_p1=$(echo ${lc_ip} | tr "." " " | awk '{ print $1 }')
 lc_ip_p2=$(echo ${lc_ip} | tr "." " " | awk '{ print $2 }')
 lc_ip_p3=$(echo ${lc_ip} | tr "." " " | awk '{ print $3 }')
@@ -235,6 +235,10 @@ mkdir -p /srv/lancache/logs/Access
 chown -R lancache:lancache /srv/lancache
 chmod -R 777 /srv/lancache
 
+#Copy the conf folder and contents (where you originally git cloned it to in step 3) to /usr/local/nginx/conf/
+cp -R $lc_base_folder/conf /usr/local/nginx/
+
+
 ## Change the Proxy Bind in Lancache Configs
 sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_nginx_loc/conf/vhosts-enabled/*.conf
 
@@ -253,14 +257,3 @@ fi
 # Updating local DNS resolvers
 echo "nameserver $lc_ip_googledns1" > /etc/resolv.conf
 echo "nameserver $lc_ip_googledns2" >> /etc/resolv.conf
-
-
-#------- netdata install optional ---------
-git clone https://github.com/firehol/netdata.git --depth=1 ~/temp-netdata
-#Next, change the directory to the cloned directory using the following command:
-cd ~/temp-netdata
-#Next, install the Netdata by running the netdata-installer.sh script as shown below:
-./netdata-installer.sh
-#Upgrade
-#Update script generated   : ./netdata-updater.sh
-echo Please reboot your system for the changes to take effect.
