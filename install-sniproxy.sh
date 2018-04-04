@@ -7,3 +7,6 @@ cd sniproxy/
 #the file name might be something like sniproxy_x64_5335253.deb it would be up one directory.
 dpkg -i ../*.deb
 curl https://raw.githubusercontent.com/OpenSourceLAN/origin-docker/master/sniproxy/sniproxy.conf -o /etc/sniproxy.conf
+echo ##########################################################################
+echo Please reboot your system for the changes to take effect.
+echo ##########################################################################
