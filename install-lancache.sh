@@ -19,6 +19,8 @@ lc_ip_gw=$( /sbin/ip route | awk '/default/ { print $3 }' )
 apt-get install net-tools -y
 #rm old lancache files 
 rm /usr/local/lancache -Rvf
+rm /usr/local/lancache -Rvf
+
 
 ---------------------------------------------------------------------------------------------
 #Get Lancache Files from github keep track of the location where you download the files to
@@ -260,6 +262,34 @@ fi
 echo "nameserver $lc_ip_googledns1" > /etc/resolv.conf
 echo "nameserver $lc_ip_googledns2" >> /etc/resolv.conf
 
-#done
-echo ###################################################################
-echo Lancache Installed pleae reboot and check services
+#IP address for services
+## Put IP's in the log file
+echo ##########################################################################
+echo Main network interface information
+echo IP $lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4 
+echo Netmask$lc_eth_netmask 
+echo ##########################################################################
+echo IP address used for services.
+echo Arena: $lc_ip_arena 
+echo Apple: $lc_ip_apple 
+echo Blizzard: $lc_ip_blizzard 
+echo GOG: $lc_ip_glyph 
+echo GOG: $lc_ip_gog 
+echo Hirez: $lc_ip_hirez 
+echo Microsoft: $lc_ip_microsoft 
+echo Origin: $lc_ip_origin 
+echo Riot: $lc_ip_riot 
+echo Steam: $lc_ip_steam 
+echo Sony: $lc_ip_sony 
+echo Enmasse: $lc_ip_enmasse 
+echo Uplay: $lc_ip_uplay 
+echo Wargaming: $lc_ip_wargaming 
+echo Zenimax: $lc_ip_zenimax 
+echo Digitalextremes: $lc_ip_digitalextremes 
+echo Pearlabyss: $lc_ip_pearlabyss 
+echo ##########################################################################
+
+
+echo ##########################################################################
+echo Lancache Installed pleae reboot and check services ,nginx,unbound,sniproxy
+echo ##########################################################################
