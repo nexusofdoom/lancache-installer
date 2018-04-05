@@ -29,7 +29,7 @@ echo Current interface name
 if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 echo "$if_name"
 #auto change interfacename to eth0
-sed -i -e 's/"$if_name"/eth0/g' /etc/network/interfaces
+sed -i -e 's/'$if_name'/eth0/g' /etc/network/interfaces
 echo "##############################################################################################"
 #need to edit /etc/network/interfaces for eth0 if not named that
 echo "##############################################################################################"
