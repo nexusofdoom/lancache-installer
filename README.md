@@ -1,7 +1,9 @@
 # lancache-installer
  
  #Install Debian 9.4 X64 with SSH and Endable sudo
- #Download url for debian https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso
+ #Download url for debian 
+  https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso
+ 
  #You will need avaliable ip's for all the services 
  
  #Install git 
