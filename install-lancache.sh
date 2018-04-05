@@ -264,11 +264,11 @@ echo "nameserver $lc_ip_googledns2" >> /etc/resolv.conf
 
 #IP address for services
 ## Put IP's in the log file
-echo ##########################################################################
+echo "##########################################################################"
 echo Main network interface information
 echo IP $lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4 
 echo Netmask$lc_eth_netmask 
-echo ##########################################################################
+echo "##########################################################################"
 echo IP address used for services.
 echo Arena: $lc_ip_arena 
 echo Apple: $lc_ip_apple 
@@ -287,9 +287,9 @@ echo Wargaming: $lc_ip_wargaming
 echo Zenimax: $lc_ip_zenimax 
 echo Digitalextremes: $lc_ip_digitalextremes 
 echo Pearlabyss: $lc_ip_pearlabyss 
-echo ##########################################################################
+echo "##########################################################################"
 
 
-echo ##########################################################################
+echo "##########################################################################"
 echo Lancache Installed pleae reboot and check services ,nginx,unbound,sniproxy
-echo ##########################################################################
+echo "##########################################################################"
