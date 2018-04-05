@@ -6,6 +6,8 @@ cd ~/temp-netdata
 ./netdata-installer.sh
 #Upgrade
 #Update script generated   : ./netdata-updater.sh
-echo ##########################################################################
+my_ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+echo "##########################################################################"
 echo Please reboot your system for the changes to take effect.
-echo ##########################################################################
+echo To Access type this into your webbrowser "http://$my_ip:19999"
+echo "##########################################################################"
