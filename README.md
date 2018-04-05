@@ -2,6 +2,8 @@
  
  Install Debian 9.4 X64 with SSH and Endable sudo
 
+ Install git 
+
 #Clone the git repo
  
  git clone -b master http://github.com/nexusofdoom/lancache-installer
