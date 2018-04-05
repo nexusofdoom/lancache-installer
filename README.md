@@ -13,7 +13,9 @@
 #Clone the git repo
  
  git clone -b master http://github.com/nexusofdoom/lancache-installer
+ 
  cd lancache-installer 
+ 
  chmod +x *.sh 
 
 #Run scripts as sudo or root user
