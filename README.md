@@ -8,6 +8,7 @@
  #You will need 18 avaliable IP's example 192.168.0.2 - 192.168.0.20 used for lancache
  
  #Install git 
+ 
  apt-get install git
 
 #Clone the git repo
