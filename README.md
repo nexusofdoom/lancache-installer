@@ -22,16 +22,21 @@
 #Run scripts as sudo or root user
 
 #Run 
+ 
  ./install.sh
  
 #Next run
+ 
  ./install-jemalloc.sh
 
 #Then run 
+ 
  ./install-nginx.sh
 
 #After run 
+ 
  ./install-sniproxy.sh
 
 #Last run 
+ 
  ./install-lancache.sh
