@@ -25,7 +25,9 @@ echo '* hard nofile  65536' >> /etc/security/limits.conf
 
 echo "##############################################################################################"
 echo Current interface name
-ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}'
+#ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}'
+if_name="$ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo"
+echo "$if_name"
 echo "##############################################################################################"
 #need to edit /etc/network/interfaces for eth0 if not named that
 echo "##############################################################################################"
