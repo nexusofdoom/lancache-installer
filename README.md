@@ -5,7 +5,7 @@
  #Download url for debian 
   https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso
  
- #You will need avaliable ip's for all the services 
+ #You will need 18 avaliable IP's example 192.168.0.2 - 192.168.0.20 used for lancache
  
  #Install git 
  apt-get install git
