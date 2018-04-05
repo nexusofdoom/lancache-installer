@@ -23,7 +23,10 @@ sysctl -p /etc/sysctl.d/disable-ipv6.conf
 echo '* soft nofile  65536' >> /etc/security/limits.conf
 echo '* hard nofile  65536' >> /etc/security/limits.conf
 
-
+echo ##############################################################################################
+echo Current interface name
+ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}'
+echo ##############################################################################################
 #need to edit /etc/network/interfaces for eth0 if not named that
 echo ##############################################################################################
 echo Pleas edit /etc/network/interfaces to match your setup if not eth0 please change in that file
