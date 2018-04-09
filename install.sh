@@ -30,12 +30,7 @@ if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 echo "$if_name"
 #auto change interfacename to eth0
 sed -i -e 's/'$if_name'/eth0/g' /etc/network/interfaces
-echo "##############################################################################################"
-#need to edit /etc/network/interfaces for eth0 if not named that
-echo "##############################################################################################"
-echo Pleas edit /etc/network/interfaces to match your setup if not eth0 please change in that file
-echo "##############################################################################################"
 sleep 3
 echo "#########################################################################################"
-echo Please reboot your system after you edit interfaces file for the changes to take effect.
+echo Please reboot your system then run install-jemalloc.sh
 echo "#########################################################################################"
