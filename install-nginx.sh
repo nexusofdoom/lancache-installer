@@ -21,5 +21,5 @@ Patching NGINX for Range Cache from Multiplay
 make
 checkinstall --pkgname=nginx --pkgversion="1.13.9-custom" --backup=no --deldoc=yes --fstrans=no --default
 echo ##########################################################################
-echo Please reboot your system for the changes to take effect.
+echo Please run install-sniproxy.sh
 echo ##########################################################################
