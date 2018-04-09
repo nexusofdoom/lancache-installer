@@ -40,3 +40,10 @@
 #Last run 
  
  ./install-lancache.sh
+ 
+#########################################################################
+Working on 
+
+change-network.sh	 an easy way to change your ip's for a new network
+
+install-netdata.sh install a web gui to monitor performance of lancache.
