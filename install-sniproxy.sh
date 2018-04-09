@@ -8,5 +8,5 @@ cd sniproxy/
 dpkg -i ../*.deb
 curl https://raw.githubusercontent.com/OpenSourceLAN/origin-docker/master/sniproxy/sniproxy.conf -o /etc/sniproxy.conf
 echo ##########################################################################
-echo Please reboot your system for the changes to take effect.
+echo Please run install-lancache.sh
 echo ##########################################################################
