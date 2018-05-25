@@ -22,7 +22,6 @@ rm /usr/local/lancache -Rvf
 rm /usr/local/lancache -Rvf
 
 
----------------------------------------------------------------------------------------------
 #Get Lancache Files from github keep track of the location where you download the files to
 git clone -b master http://github.com/bntjah/lancache "$lc_git"
 mv "$lc_git" "$lc_base_folder"
@@ -50,7 +49,6 @@ systemctl enable nginx
 cp "$lc_base_folder/init.d/sniproxy" /etc/init.d/sniproxy
 chmod +x /etc/init.d/sniproxy
 systemctl enable sniproxy
----------------------------------------------------------------------------------------------
 
 ## Divide the ip in variables
 lc_ip=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
