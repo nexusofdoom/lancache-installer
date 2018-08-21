@@ -1,15 +1,17 @@
 # lancache-installer
+
+Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [Zero Ping Heroes](https://github.com/zeropingheroes)
  
- # Install Debian 9.4 X64 with SSH and Endable sudo
+ ##### Install Debian 9.4 X64 with SSH and Endable sudo
  
- # Download url for debian 
+ ##### Download url for debian:
   https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso
  
- # You will need 18 avaliable IP's example 192.168.0.2 - 192.168.0.20 used for lancache
+ ##### You will need 18 avaliable IP's example 192.168.0.2 - 192.168.0.20 used for lancache
  
  # Install git 
  
- `apt-get install git`
+`apt-get install git`
 
 # Clone the git repo
  
