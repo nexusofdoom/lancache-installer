@@ -12,6 +12,10 @@ mkdir -p /var/run/sniproxy
 mkdir -p /var/log/sniproxy
 #adduser -d /var/empty -M -s /sbin/nologin -r sniproxy
 #chown sniproxy:sniproxy /var/run/sniproxy
+
+#need to move files and enable service
+systemctl enable sniproxy.service
+
 echo ##########################################################################
 echo Please run install-lancache.sh
 echo ##########################################################################
