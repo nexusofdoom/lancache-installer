@@ -10,6 +10,7 @@ apt-get install locate -y
 apt-get install net-tools -y
 apt-get install screen -y
 apt-get install git
+apt-get install ifupdown -y
 apt-get install checkinstall docbook-xsl docbook-xsl-ns docbook-xsl-doc-html xsltproc -y
 apt-get install nload iftop httpry iftop tcpdump tshark -y
 apt-get install devscripts curl git unbound build-essential libpcre3 libpcre3-dev zlib1g-dev libreadline-dev libev4 libev-dev libncurses5-dev git libssl-dev -y
