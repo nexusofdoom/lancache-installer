@@ -43,6 +43,10 @@ adduser --system --no-create-home lancache
 addgroup --system lancache
 usermod -aG lancache lancache
 
+## Autostart enable nginx service
+cp "$lc_base_folder2/etc/systemd/system/nginx.service" /etc/systemd/system/nginx.service
+chmod +x /etc/systemd/system/nginx.service
+systemctl enable nginx.service
 
 ## Autostarting sniproxy
 cp "$lc_base_folder/init.d/sniproxy" /etc/init.d/sniproxy
