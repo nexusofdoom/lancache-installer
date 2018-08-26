@@ -48,11 +48,10 @@ cp "$lc_base_folder/etc/systemd/system/nginx.service" /etc/systemd/system/nginx.
 chmod +x /etc/systemd/system/nginx.service
 systemctl enable nginx.service
 
-## Autostarting sniproxy
-##cp "$lc_base_folder/init.d/sniproxy" /etc/init.d/sniproxy
-cp "$lc_base_folder/etc/systemd/system/sniproxy.service" /etc/systemd/system/sniproxy.service
-chmod +x /etc/systemd/system/sniproxy.service
-systemctl enable sniproxy.service
+## Moving Sniproxy config to correct location.
+cp "$lc_base_folder/etc/default/sniproxy" /etc/default/sniproxy
+cp "$lc_base_folder/etc/sniproxy.conf" /etc/
+
 
 ## Divide the ip in variables
 lc_ip=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
