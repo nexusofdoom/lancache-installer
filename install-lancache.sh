@@ -3,11 +3,8 @@
 lc_nginx_version=1.15.2
 lc_nginx_url=http://nginx.org/download/nginx-$lc_nginx_version.tar.gz
 lc_base_folder=/usr/local/lancache
-#lc_base_folder2=/usr/local/lancache2
 lc_git=/usr/local/temp
-#lc_git2=/usr/local/temp2
 lc_nginx_loc=/etc/nginx
-#lc_sniproxy_bin=/usr/local/sbin/sniproxy
 lc_srv_loc=/srv/lancache
 lc_unbound_loc=/etc/unbound
 lc_date=$( date +"%m-%d-%y %T" )
@@ -25,10 +22,8 @@ rm /usr/local/lancache -Rvf
 
 
 #Get Lancache Files from github keep track of the location where you download the files to
-#git clone -b master http://github.com/bntjah/lancache "$lc_git"
 git clone -b master http://github.com/nexusofdoom/lancache-installer "$lc_git"
 mv "$lc_git" "$lc_base_folder"
-#mv "$lc_git2" "$lc_base_folder2"
 ## Create the necessary folders
 mkdir -p $lc_base_folder/config/
 mkdir -p $lc_base_folder/data/
