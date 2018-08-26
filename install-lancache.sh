@@ -1,10 +1,10 @@
 #!/bin/bash
 ## Set variables
-lc_nginx_version=1.13.9
+lc_nginx_version=1.15.2
 lc_nginx_url=http://nginx.org/download/nginx-$lc_nginx_version.tar.gz
 lc_base_folder=/usr/local/lancache
 lc_git=/usr/local/temp
-lc_nginx_loc=/usr/local/nginx
+lc_nginx_loc=/etc/nginx
 #lc_sniproxy_bin=/usr/local/sbin/sniproxy
 lc_srv_loc=/srv/lancache
 lc_unbound_loc=/etc/unbound
