@@ -1,11 +1,16 @@
 # Regular host IP
-auto lc-host-vint
-    iface lc-host-vint inet static
-    address lc-host-ip
-    netmask lc-host-netmask
-    gateway lc-host-gateway
-    dns-nameservers 8.8.8.8 8.8.4.4
-
+version: 2
+ renderer: networkd
+ ethernets:
+   lc-host-vint:
+     dhcp4: no
+     dhcp6: no
+     addresses: [lc-host-ip-net]
+     gateway4: lc-host-gateway
+     nameservers:
+       addresses: [8.8.8.8,8.8.4.4]
+       
+       
 # IP used for Steam caching
 auto lc-host-vint:1
     iface lc-host-vint:1 inet static
