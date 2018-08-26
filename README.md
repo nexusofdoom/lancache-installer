@@ -7,6 +7,8 @@ Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nex
  
  ##### Download url for debian:
   https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso
+ ##### Download url for Ubuntu 18.04.1 Server  
+  http://cdimage.ubuntu.com/releases/18.04.1/release/ubuntu-18.04.1-server-amd64.iso
  
  ##### You will need 18 avaliable IP's example 192.168.0.2 - 192.168.0.20 used for lancache
  
