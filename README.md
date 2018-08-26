@@ -3,6 +3,7 @@
 Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom) and [Zero Ping Heroes](https://github.com/zeropingheroes)
  
  ##### Install Debian 9.4 X64 with SSH and Endable sudo
+ ##### Testing Ubuntu 18.04.1 with SSH run scripts as sudo.
  
  ##### Download url for debian:
   https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso
