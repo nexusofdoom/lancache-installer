@@ -49,7 +49,7 @@ cp "$lc_base_folder/etc/sniproxy.conf" /etc/
 
 
 ## Divide the ip in variables
-lc_ip=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+lc_ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 lc_eth_int=$( ip route get 8.8.8.8 | awk '{print $5}' )
 lc_eth_netmask=$( ifconfig eth0 | grep inet | grep netmask | cut -f13 -d ' ' )
 lc_ip_p1=$(echo ${lc_ip} | tr "." " " | awk '{ print $1 }')
