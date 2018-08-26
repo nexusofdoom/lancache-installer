@@ -1,4 +1,4 @@
-# Do not use - Under develepment lancache-installer
+# Do not use - Under development lancache-installer
 
 Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom) and [Zero Ping Heroes](https://github.com/zeropingheroes)
  
