@@ -1,8 +1,8 @@
 #!/bin/bash
 #Added universe repository
-apt-add-repository universe 
-apt update -y
-apt upgrade -y
+#apt-add-repository universe 
+apt-get update -y
+apt-get upgrade -y
 
 #Install needed packacges.
 apt-get install libgeoip-dev -y
