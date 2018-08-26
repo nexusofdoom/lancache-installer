@@ -246,15 +246,15 @@ cp -R $lc_base_folder/etc/nginx /etc/
 
 
 ## Change the Proxy Bind in Lancache Configs
-sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_nginx_loc/conf/vhosts-enabled/*.conf
+sed -i 's|lc-host-proxybind|'$lc_ip'|g' $lc_nginx_loc/sites-available/*.conf
 
 ## Moving Base Files to The Correct Locations
-if [ -f "$lc_base_folder/hosts" ]; then
+if [ -f "$lc_base_folder/etc/hosts" ]; then
 	mv /etc/hosts /etc/hosts.bak
 	cp $lc_base_folder/etc/hosts /etc/hosts
 fi
 
-if [ -f "$lc_base_folder/interfaces" ]; then
+if [ -f "$lc_base_folder/etc/network/interfaces" ]; then
 	mv /etc/network/interfaces /etc/network/interfaces.bak
 	cp $lc_base_folder/interfaces /etc/network/interfaces
 fi
