@@ -10,7 +10,7 @@ apt-get install locate -y
 apt-get install net-tools -y
 apt-get install screen -y
 apt-get install git
-apt-get install ifupdown -y
+#apt-get install ifupdown -y
 apt-get install checkinstall docbook-xsl docbook-xsl-ns docbook-xsl-doc-html xsltproc -y
 apt-get install nload iftop httpry iftop tcpdump tshark -y
 apt-get install devscripts curl git unbound build-essential libpcre3 libpcre3-dev zlib1g-dev libreadline-dev libev4 libev-dev libncurses5-dev git libssl-dev -y
@@ -21,8 +21,8 @@ apt-get install autotools-dev debhelper dh-autoreconf dpkg-dev gettext libpcre3-
 apt-get install unbound build-essential libpcre3 libpcre3-dev zlib1g-dev libreadline-dev libev4 libncurses5-dev unbound build-essential libncurses5-dev libssl-dev httpry libudns0 libudns-dev libev4 automake libtool autoconf autotools-dev  debhelper pkg-config uuid-dev -y
 
 #get grub ready for old network settings
-sed -i -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/g' /etc/default/grub
-grub-mkconfig -o /boot/grub/grub.cfg
+#sed -i -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/g' /etc/default/grub
+#grub-mkconfig -o /boot/grub/grub.cfg
 echo IPv6 disabled
 #Disable IPv6
 echo "net.ipv6.conf.all.disable_ipv6=1" > /etc/sysctl.d/disable-ipv6.conf
@@ -39,7 +39,7 @@ echo Current interface name
 if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 echo "$if_name"
 #auto change interfacename to eth0
-sed -i -e 's/'$if_name'/eth0/g' /etc/network/interfaces
+#sed -i -e 's/'$if_name'/eth0/g' /etc/network/interfaces
 sleep 3
 echo "#########################################################################################"
 echo Please reboot your system then run install-jemalloc.sh
