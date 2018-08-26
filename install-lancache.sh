@@ -40,9 +40,10 @@ addgroup --system lancache
 usermod -aG lancache lancache
 
 ## Autostarting nginx
-cp "$lc_base_folder/init.d/nginx" /etc/init.d/nginx 
-chmod +x /etc/init.d/nginx
-systemctl enable nginx
+#cp "$lc_base_folder/init.d/nginx" /etc/init.d/nginx 
+#chmod +x /etc/init.d/nginx
+#systemctl enable nginx
+sudo systemctl start nginx.service && sudo systemctl enable nginx.service
 
 
 ## Autostarting sniproxy
