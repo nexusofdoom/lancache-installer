@@ -1,4 +1,8 @@
 #!/bin/bash
+#Added universe repository
+apt-add-repository universe 
+
+#Install needed packacges.
 apt-get install libgeoip-dev -y
 apt-get install locate -y
 apt-get install net-tools -y
@@ -10,6 +14,7 @@ apt-get install autotools-dev cdbs debhelper dh-autoreconf dpkg-dev gettext libe
 apt-get install devscripts curl git unbound build-essential libpcre3 libpcre3-dev zlib1g-dev libreadline-dev libev4 libev-dev libncurses5-dev git libssl-dev -y
 apt-get install curl git unbound build-essential libpcre3 zlib1g-dev libreadline-dev libncurses5-dev libssl-dev httpry libudns0 libudns-dev libev4 libev-dev devscripts automake libtool autoconf autotools-dev cdbs debhelper dh-autoreconf dpkg-dev gettext pkg-config fakeroot libpcre3-dev libgd2-xpm-dev libgeoip-dev -y
 apt-get install uuid-dev -y
+
 #get grub ready for old network settings
 sed -i -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/g' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
