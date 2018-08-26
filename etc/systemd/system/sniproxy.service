@@ -6,8 +6,9 @@ After=network-online.target
 
 [Service]
 Type=forking
+OPTIONS="-c /etc/sniproxy/sniproxy.conf"
 PIDFile=/var/run/sniproxy/sniproxy.pid
-ExecStart=/usr/sbin/sniproxy
+ExecStart=/usr/sbin/sniproxy ${OPTIONS}
 Restart=always
 
 [Install]
