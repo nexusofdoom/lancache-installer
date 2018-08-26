@@ -5,33 +5,12 @@ apt-get update -y
 apt-get upgrade -y
 
 #Install needed packacges.
-apt-get install libgeoip-dev -y
-apt-get install locate -y
-apt-get install net-tools -y
-apt-get install screen -y
-apt-get install git
-#apt-get install ifupdown -y
-apt-get install checkinstall docbook-xsl docbook-xsl-ns docbook-xsl-doc-html xsltproc -y
-apt-get install nload iftop httpry iftop tcpdump tshark -y
-apt-get install devscripts curl git unbound build-essential libpcre3 libpcre3-dev zlib1g-dev libreadline-dev libev4 libev-dev libncurses5-dev git libssl-dev -y
-apt-get install curl git unbound build-essential libpcre3 zlib1g-dev libreadline-dev libncurses5-dev libssl-dev httpry libudns0 libudns-dev libev4 libev-dev devscripts automake libtool autoconf autotools-dev cdbs debhelper dh-autoreconf dpkg-dev gettext pkg-config fakeroot libpcre3-dev libgd2-xpm-dev libgeoip-dev -y
-apt-get install uuid-dev -y
-apt-get install libgeoip-dev locate net-tools screen checkinstall docbook-xsl docbook-xsl-ns docbook-xsl-doc-html xsltproc nload iftop httpry iftop tcpdump -y
-apt-get install autotools-dev debhelper dh-autoreconf dpkg-dev gettext libpcre3-dev pkg-config software-properties-common autotools-dev cdbs debhelper dh-autoreconf dpkg-dev gettext libev-dev libpcre3-dev libudns-dev pkg-config fakeroot devscripts -y
-apt-get install unbound build-essential libpcre3 libpcre3-dev zlib1g-dev libreadline-dev libev4 libncurses5-dev unbound build-essential libncurses5-dev libssl-dev httpry libudns0 libudns-dev libev4 automake libtool autoconf autotools-dev  debhelper pkg-config uuid-dev -y
-
-#Install sniproxy
-apt-get install sniproxy -y
+apt-get install nginx unbound sniproxy screen -y
   
-
-
-#get grub ready for old network settings
-#sed -i -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/g' /etc/default/grub
-#grub-mkconfig -o /boot/grub/grub.cfg
-echo IPv6 disabled
-#Disable IPv6
+#Disable IP
 echo "net.ipv6.conf.all.disable_ipv6=1" > /etc/sysctl.d/disable-ipv6.conf
 sysctl -p /etc/sysctl.d/disable-ipv6.conf
+echo IPv6 disabled
 
 ## Change Limits of the system for Lancache to work without issues
 #need to get the limits into the /etc/security/limits.conf  * soft nofile  65536 * hard nofile  65536
@@ -47,5 +26,5 @@ echo "$if_name"
 #sed -i -e 's/'$if_name'/eth0/g' /etc/network/interfaces
 sleep 3
 echo "#########################################################################################"
-echo Please reboot your system then run install-jemalloc.sh
+echo  Please run ./install-lancache.sh
 echo "#########################################################################################"
