@@ -35,6 +35,7 @@ chown -R $USER:$USER $lc_base_folder
 lc_ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 lc_eth_int=$( ip route get 8.8.8.8 | awk '{print $5}' )
 lc_eth_netmask=$( ifconfig enp0s3 | grep inet | grep netmask | cut -f13 -d ' ' )
+lc_eth_net=$(ip -4 addr show enp0s3 | grep -oP "(?<=inet ).*(?=br)" )
 lc_ip_p1=$(echo ${lc_ip} | tr "." " " | awk '{ print $1 }')
 lc_ip_p2=$(echo ${lc_ip} | tr "." " " | awk '{ print $2 }')
 lc_ip_p3=$(echo ${lc_ip} | tr "." " " | awk '{ print $3 }')
@@ -170,6 +171,7 @@ sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/etc/hosts
 
 ## Make the Necessary Changes For The New Interfaces File
 sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
+sed -i 's|lc-host-ip-net|'$lc_eth_net'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
 sed -i 's|lc-host-gateway|'$lc_ip_gw'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
 sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
 sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
