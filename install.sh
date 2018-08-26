@@ -20,6 +20,12 @@ apt-get install libgeoip-dev locate net-tools screen checkinstall docbook-xsl do
 apt-get install autotools-dev debhelper dh-autoreconf dpkg-dev gettext libpcre3-dev pkg-config software-properties-common autotools-dev cdbs debhelper dh-autoreconf dpkg-dev gettext libev-dev libpcre3-dev libudns-dev pkg-config fakeroot devscripts -y
 apt-get install unbound build-essential libpcre3 libpcre3-dev zlib1g-dev libreadline-dev libev4 libncurses5-dev unbound build-essential libncurses5-dev libssl-dev httpry libudns0 libudns-dev libev4 automake libtool autoconf autotools-dev  debhelper pkg-config uuid-dev -y
 
+#working on this for sniproxy
+apt-get install sniproxy -y
+move git/etc/default/sniproxy to same location 
+move git/etc/sniproxy.conf to same locaiton  
+
+
 #get grub ready for old network settings
 #sed -i -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/g' /etc/default/grub
 #grub-mkconfig -o /boot/grub/grub.cfg
