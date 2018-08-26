@@ -1,6 +1,6 @@
 # lancache-installer
 
-Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom), [Zero Ping Heroes](https://github.com/zeropingheroes)
+Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom) and [Zero Ping Heroes](https://github.com/zeropingheroes)
  
  ##### Install Debian 9.4 X64 with SSH and Endable sudo
  
