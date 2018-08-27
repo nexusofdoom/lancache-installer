@@ -5,7 +5,7 @@ version: 2
    lc-host-vint:
      dhcp4: no
      dhcp6: no
-     addresses: lc-host-network
+     addresses: [lc-host-network]
      gateway4: lc-host-gateway
      nameservers:
        addresses: [8.8.8.8]
