@@ -6,6 +6,23 @@ version: 2
      dhcp4: no
      dhcp6: no
      addresses: [lc-host-network]
+     addresses: [lc-host-steam]
+     addresses: [lc-host-riot]
+     addresses: [lc-host-blizard]
+     addresses: [lc-host-hirez]
+     addresses: [lc-host-origin]
+     addresses: [lc-host-sony]
+     addresses: [lc-host-microsoft]
+     addresses: [lc-host-enmasse]
+     addresses: [lc-host-gog]
+     addresses: [lc-host-arena]
+     addresses: [lc-host-apple]
+     addresses: [lc-host-wargame]
+     addresses: [lc-host-uplay]
+     addresses: [lc-host-glyph]
+     addresses: [lc-host-zenimax]
+     addresses: [lc-host-digitalextremes]
+     addresses: [lc-host-pearlabyss]
      gateway4: lc-host-gateway
      nameservers:
        addresses: [8.8.8.8]
