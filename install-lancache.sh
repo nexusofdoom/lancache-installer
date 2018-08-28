@@ -171,7 +171,7 @@ sed -i 's|lc-host-pearlabyss|'$lc_ip_pearlabyss'|g' $lc_base_folder/etc/hosts
 
 ## Make the Necessary Changes For The New Interfaces File
 sed -i 's|lc-host-ip|'$lc_ip'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
-sed -i 's|lc-host-network|'$lc_eth_net'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
+sed -i "s^lc-host-network^$lc_eth_net^g" $lc_base_folder/etc/netplan/01-netcfg.yaml
 sed -i 's|lc-host-gateway|'$lc_ip_gw'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
 sed -i 's|lc-host-arena|'$lc_ip_arena'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
 sed -i 's|lc-host-apple|'$lc_ip_apple'|g' $lc_base_folder/etc/netplan/01-netcfg.yaml
