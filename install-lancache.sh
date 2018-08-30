@@ -132,12 +132,6 @@ mv /etc/default/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
 cp $lc_dl_dir/etc/sniproxy.conf   /etc/sniproxy.conf
 
 
-echo "##############################################################################################"
-echo Current interface name
-#ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}'
-if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
-echo "$if_name"
-
 ### To Do Still
 ### Change the proxy bind
 ### Systemd Scripts for everything
