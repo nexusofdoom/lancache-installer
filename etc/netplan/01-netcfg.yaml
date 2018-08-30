@@ -17,7 +17,7 @@ version: 2
      addresses: [lc-host-gog]
      addresses: [lc-host-arena]
      addresses: [lc-host-apple]
-     addresses: [lc-host-wargame]
+     addresses: [lc-host-wargaming]
      addresses: [lc-host-uplay]
      addresses: [lc-host-glyph]
      addresses: [lc-host-zenimax]
