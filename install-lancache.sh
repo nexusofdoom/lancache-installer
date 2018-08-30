@@ -22,7 +22,6 @@ lc_network=$( hostname -I | awk '{ print $1 }' )
 lc_gateway=$( route -n | grep 'UG[ \t]' | awk '{print $2}' )
 if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 TIMESTAMP=$(date +%s)
-#rm /tmp/lancache -Rvf
 
 # Arrays used
 # Services used and set ip for and created the lancache folders for
@@ -52,16 +51,11 @@ lc_ip_p4=$(echo ${lc_ip} | tr "." " " | awk '{ print $4 }' | cut -f1 -d "/" )
 #Subnet
 lc_ip_sn=$(echo ${lc_ip} | sed 's:.*/::' )
 
-###
-#STILL NEED TO USE THIS ONCE DONE
 ########### Update lancache config folder from github########################################
-#mkdir $lc_base_folder
-#d $lc_dl_dir
 cd  /usr/local/lancache
 git clone -b master http://github.com/nexusofdoom/lancache-installer
 
 
-#if [ ! -f "$lc_tmp_ip" ]; then
         for service in ${lc_services[@]}; do
                         # Check if the folder exists if not creates it
                         if [ ! -d "/tmp/data/$service" ]; then
@@ -84,6 +78,10 @@ git clone -b master http://github.com/nexusofdoom/lancache-installer
                         sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/'$lc_ip_sn'|g' $lc_tmp_yaml
 
                 done
+
+                       # This Changes the Unbound File with the correct IP Adresses for lc-host-ip
+                        sed -i 's|lc-host-ip|'$lc_network'|g' $lc_tmp_unbound
+
                         # This Corrects the Host File For The Netplan with gateway
                         sed -i 's|lc-host-gateway|'$lc_gateway'|g' $lc_tmp_yaml
 
@@ -129,8 +127,8 @@ sed -i 's|lc-host-proxybind|'$lc_network'|g' $lc_base_folder/etc/nginx/sites-ava
 ## Doing the necessary changes for Lancache
 mv $lc_nginx_loc/nginx.conf $lc_nginx_loc/nginx.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/nginx/nginx.conf $lc_nginx_loc/nginx.conf
-mkdir -p $lc_nginx_loc/conf/lancache
-cp $lc_base_folder/etc/nginx/lancache/* $lc_nginx_loc/lancache
+#mkdir -p $lc_nginx_loc/conf/lancache
+cp $lc_base_folder/etc/nginx/lancache $lc_nginx_loc -Rvf
 cp $lc_base_folder/etc/nginx/sites-available/*.conf $lc_nginx_loc/sites-available/
 
 
@@ -151,8 +149,10 @@ cp $lc_base_folder/etc/unbound/unbound.conf   /etc/unbound/unbound.conf
 
 
 # Move hosts and network interface values into place.
-#mv /etc/netplan/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
-#cp $lc_base_folder/etc/netplan/sniproxy  /etc/default/sniproxy
+mv /etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml.$TIMESTAMP.bak
+cp $lc_base_folder/etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml
+mv /etc/hosts /etc/hosts.$TIMESTAMP.bak
+cp $lc_base_folder/etc/hosts /etc/hosts
 
 echo "##############################################################################################"
 echo Current interface name
