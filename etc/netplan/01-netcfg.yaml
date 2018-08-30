@@ -8,7 +8,7 @@ version: 2
      addresses: [lc-host-network]
      addresses: [lc-host-steam]
      addresses: [lc-host-riot]
-     addresses: [lc-host-blizard]
+     addresses: [lc-host-blizzard]
      addresses: [lc-host-hirez]
      addresses: [lc-host-origin]
      addresses: [lc-host-sony]
