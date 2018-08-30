@@ -1,4 +1,10 @@
 #!/bin/bash
+# Following Checks if you run as ROOT or not
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
 ## Set variables
 lc_base_folder=/usr/local/lancache
 lc_git=/usr/local/temp
