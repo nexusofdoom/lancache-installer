@@ -7,21 +7,22 @@ fi
 
 # Variables you should most likely not touch
 # Unless you know what you are doing
-lc_base_folder=/usr/local/lancache
+lc_base_folder=/usr/local/lancache/lancache-installer
+rm /usr/local/lancache/lancache-installer -Rvf
+mkdir -p /usr/local/lancache/lancache-installer
 lc_tmp_ip=/tmp/services_ips.txt
-lc_tmp_unbound=$lc_base_folder/temp/unbound.conf
-lc_tmp_hosts=$lc_base_folder/temp/hosts
+lc_tmp_unbound=$lc_base_folder/etc/unbound/unbound.conf
+lc_tmp_hosts=$lc_base_folder/etc/hosts
 lc_nginx_loc=/etc/nginx
-#lc_sniproxy_bin=/usr/local/sbin/sniproxy
 lc_srv_loc=/srv/lancache
 lc_unbound_loc=/etc/unbound
-#lc_nginx_url=http://nginx.org/download/nginx-$lc_nginx_version.tar.gz
-lc_tmp_yaml=$lc_base_folder/temp/01-lancache.yaml
-lc_dl_dir=/tmp/lancache
-## Divide the ip in variables
-lc_ip_nginx=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+lc_tmp_yaml=$lc_base_folder/etc/netplan/01-netcfg.yaml
+lc_dl_dir=/usr/local/lancache
+lc_network=$( hostname -I | awk '{ print $1 }' )
+lc_gateway=$( route -n | grep 'UG[ \t]' | awk '{print $2}' )
+if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 TIMESTAMP=$(date +%s)
-
+#rm /tmp/lancache -Rvf
 
 # Arrays used
 # Services used and set ip for and created the lancache folders for
@@ -51,10 +52,12 @@ lc_ip_p4=$(echo ${lc_ip} | tr "." " " | awk '{ print $4 }' | cut -f1 -d "/" )
 #Subnet
 lc_ip_sn=$(echo ${lc_ip} | sed 's:.*/::' )
 
-
+###
+#STILL NEED TO USE THIS ONCE DONE
 ########### Update lancache config folder from github########################################
-mkdir $lc_dl_dir
-cd $lc_dl_dir
+#mkdir $lc_base_folder
+#d $lc_dl_dir
+cd  /usr/local/lancache
 git clone -b master http://github.com/nexusofdoom/lancache-installer
 
 
@@ -78,19 +81,25 @@ git clone -b master http://github.com/nexusofdoom/lancache-installer
                         sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_hosts
 
                         # This Corrects the Host File For The Netplan
-                        sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_yaml
+                        sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/'$lc_ip_sn'|g' $lc_tmp_yaml
 
-#                done
-#        else
-#                echo Sorry Something went wrong as the file $lc_tmp_ip already exists!
-#fi
+                done
+                        # This Corrects the Host File For The Netplan with gateway
+                        sed -i 's|lc-host-gateway|'$lc_gateway'|g' $lc_tmp_yaml
 
-for logfolder in ${lc_logfolders[@]}; do
+                        # This Corrects the Host File For The Netplan with primary network
+                        sed -i 's|lc-host-network|'$lc_network'/'$lc_ip_sn'|g' $lc_tmp_yaml
+
+			# This Corrects the Host File For The Netplan with interface name
+                        sed -i 's|lc-host-vint|'$if_name'|g' $lc_tmp_yaml
+
+
+#for logfolder in ${lc_logfolders[@]}; do
         # Check if the folder exists if not creates it
-        if [ ! -d "$lc_base_folder/$folder" ]; then
+ #       if [ ! -d "$lc_base_folder/$folder" ]; then
                 mkdir -p $lc_base_folder/$logfolder
-        fi
-done
+  #      fi
+#done
 
 
 #Disable IPv6
@@ -106,19 +115,23 @@ echo IPv6 disabled
         echo '* hard nofile  65536' >> /etc/security/limits.conf
 
 # Change Ownership of folders
+mkdir /srv/lancache
+mkdir -p /srv/lancache/data/{microsoft,installs,other,tmp,hirez,origin,riot,gog,sony,steam,wargaming,arenanetworks,uplay,glyph,zenimax,digitalextremes,pearlabyss}
+mkdir -p /srv/lancache/logs/{Errors,Keys,Access}
 chown -R www-data:www-data /srv/lancache
+
 
 #Install Nginx Server
 apt install nginx -y
 
 ## Change the Proxy Bind in Lancache Configs
-sed -i 's|lc-host-proxybind|'$lc_ip_nginx'|g' $lc_nginx_loc/etc/nginx/sites-available/*.conf
+sed -i 's|lc-host-proxybind|'$lc_network'|g' $lc_base_folder/etc/nginx/sites-available/*.conf
 ## Doing the necessary changes for Lancache
 mv $lc_nginx_loc/nginx.conf $lc_nginx_loc/nginx.conf.$TIMESTAMP.bak
-cp $lc_dl_dir/etc/nginx/nginx.conf $lc_nginx_loc/nginx.conf
+cp $lc_base_folder/etc/nginx/nginx.conf $lc_nginx_loc/nginx.conf
 mkdir -p $lc_nginx_loc/conf/lancache
-cp $lc_dl_dir/etc/nginx/lancache/* $lc_nginx_loc/lancache
-cp $lc_dl_dir/etc/nginx/sites-available/*.conf $lc_nginx_loc/sites-available/
+cp $lc_base_folder/etc/nginx/lancache/* $lc_nginx_loc/lancache
+cp $lc_base_folder/etc/nginx/sites-available/*.conf $lc_nginx_loc/sites-available/
 
 
 # Check if a previous workdir contains sniproxy
@@ -127,10 +140,25 @@ apt install sniproxy -y
 
 ##enable sniproxy and move configs
 mv /etc/default/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
-cp $lc_dl_dir/etc/default/sniproxy  /etc/default/sniproxy
-mv /etc/default/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
-cp $lc_dl_dir/etc/sniproxy.conf   /etc/sniproxy.conf
+cp $lc_base_folder/etc/default/sniproxy  /etc/default/sniproxy
+mv /etc/sniproxy.conf /etc/sniproxy.conf.$TIMESTAMP.bak
+cp $lc_base_folder/etc/sniproxy.conf   /etc/sniproxy.conf
 
+# Install unbound
+apt-get install unbound -y
+mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.$TIMESTAMP.bak
+cp $lc_base_folder/etc/unbound/unbound.conf   /etc/unbound/unbound.conf
+
+
+# Move hosts and network interface values into place.
+#mv /etc/netplan/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
+#cp $lc_base_folder/etc/netplan/sniproxy  /etc/default/sniproxy
+
+echo "##############################################################################################"
+echo Current interface name
+#ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}'
+#if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
+echo "$if_name"
 
 ### To Do Still
 ### Change the proxy bind
@@ -139,3 +167,10 @@ cp $lc_dl_dir/etc/sniproxy.conf   /etc/sniproxy.conf
 ### I have no problem with you redistributing this under your own name
 ### Just leave the following piece of line in there
 ### Base created by Geoffrey "bn_" @ https://github.com/bntjah
+echo $lc_base_folder
+###
+echo $lc_network
+###
+echo $lc_base_folder
+echo $lc_ip_p4
+echo $lc_gateway
