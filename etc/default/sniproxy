@@ -10,4 +10,4 @@
 
 # Whether or not to run the sniproxy daemon; set to 0 to disable, 1 to enable.
 ENABLED=1
-DAEMON_ARGS="-c /etc/sniproxy/sniproxy.conf"
+DAEMON_ARGS="-c /etc/sniproxy.conf"
