@@ -1,10 +1,11 @@
-# Regular host IP
-version: 2
+network:
+ version: 2
  renderer: networkd
  ethernets:
-   lc-host-vint:
+   eth0:
      dhcp4: no
      dhcp6: no
+     addresses: [10.0.2.233/24]
      addresses: [lc-host-network]
      addresses: [lc-host-steam]
      addresses: [lc-host-riot]
@@ -23,7 +24,7 @@ version: 2
      addresses: [lc-host-zenimax]
      addresses: [lc-host-digitalextremes]
      addresses: [lc-host-pearlabyss]
-     gateway4: lc-host-gateway
+	 
+	 gateway4: lc-host-gateway
      nameservers:
-       addresses: [8.8.8.8, 8.8.4.4]
-       
+       addresses: [8.8.8.8,8.8.4.4]
