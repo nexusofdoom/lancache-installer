@@ -5,7 +5,6 @@ network:
    eth0:
      dhcp4: no
      dhcp6: no
-     addresses: [10.0.2.233/24]
      addresses: [lc-host-network]
      addresses: [lc-host-steam]
      addresses: [lc-host-riot]
