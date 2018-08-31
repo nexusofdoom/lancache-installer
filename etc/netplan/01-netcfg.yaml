@@ -24,7 +24,6 @@ network:
      addresses: [lc-host-zenimax]
      addresses: [lc-host-digitalextremes]
      addresses: [lc-host-pearlabyss]
-	 
-	 gateway4: lc-host-gateway
+     gateway4: lc-host-gateway
      nameservers:
        addresses: [8.8.8.8,8.8.4.4]
