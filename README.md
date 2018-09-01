@@ -23,6 +23,10 @@ Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [Nex
  `./install-lancache.sh`
  
 ##########################################################################
+ 
  To access netdata 
  open broswer navigate to http://your-primary-ip:19999
+ 
+##########################################################################
+
 
