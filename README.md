@@ -1,4 +1,4 @@
-Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom) and [Zero Ping Heroes](https://github.com/zeropingheroes)
+Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom), [Zero Ping Heroes](https://github.com/zeropingheroes) and [Geoffrey "bn_"](https://github.com/bntjah)
  
  
  ##### Ubuntu 18.04.1 with OpenSSH Server.
