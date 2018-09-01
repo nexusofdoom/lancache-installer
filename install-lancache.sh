@@ -5,6 +5,13 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+#Update packages 
+apt update -y
+apt upgrade -y
+
+#Install netdata
+apt install netdata -y
+
 # Variables you should most likely not touch
 # Unless you know what you are doing
 lc_base_folder=/usr/local/lancache/lancache-installer
@@ -17,6 +24,7 @@ lc_nginx_loc=/etc/nginx
 lc_srv_loc=/srv/lancache
 lc_unbound_loc=/etc/unbound
 lc_tmp_yaml=$lc_base_folder/etc/netplan/01-netcfg.yaml
+lc_netdata=/etc/netdata/netdata.conf
 lc_dl_dir=/usr/local/lancache
 lc_network=$( hostname -I | awk '{ print $1 }' )
 lc_gateway=$( route -n | grep 'UG[ \t]' | awk '{print $2}' )
@@ -90,6 +98,9 @@ git clone -b master http://github.com/nexusofdoom/lancache-installer
 
 			# This Corrects the Host File For The Netplan with interface name
                         sed -i 's|lc-host-vint|'$if_name'|g' $lc_tmp_yaml
+			
+			# This Corrects the loopback to bind to primary IP Address
+			sed -i 's|127.0.0.1|'$lc_network'|g' $lc_netdata
 
 
 #for logfolder in ${lc_logfolders[@]}; do
