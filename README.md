@@ -25,7 +25,7 @@ Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [Nex
 ##########################################################################
  
  To access netdata 
- open broswer navigate to http://your-primary-ip:19999
+ open broswer and navigate to http://your-primary-ip:19999
  
 ##########################################################################
 
