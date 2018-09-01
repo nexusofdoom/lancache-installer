@@ -168,9 +168,16 @@ echo "$if_name"
 ### Just leave the following piece of line in there
 ### Base created by Geoffrey "bn_" @ https://github.com/bntjah
 echo $lc_base_folder
-###
+echo "##############################################################################################"
+echo DNS Server IP / Point Clients to Use this DNS Server.
 echo $lc_network
-###
+echo "##############################################################################################"
 echo $lc_base_folder
 echo $lc_ip_p4
 echo $lc_gateway
+echo "##############################################################################################"
+echo Reboot System
+echo "##############################################################################################"
+
+
+
