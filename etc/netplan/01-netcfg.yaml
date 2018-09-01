@@ -2,7 +2,7 @@ network:
  version: 2
  renderer: networkd
  ethernets:
-   eth0:
+   lc-host-vint:
      dhcp4: no
      dhcp6: no
      addresses: [lc-host-network]
