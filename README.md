@@ -23,5 +23,5 @@ Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [Nex
  `./install-lancache.sh`
  
 #########################################################################
-Install a web gui to monitor performance of lancache.
-./install-netdata.sh 
+To access netdata open broswer navigate to http://your-primary-ip:19999
+
