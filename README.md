@@ -1,7 +1,7 @@
 Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom) and [Zero Ping Heroes](https://github.com/zeropingheroes)
  
  
- ##### Ubuntu 18.04.1 with SSH.
+ ##### Ubuntu 18.04.1 with OpenSSH Server.
  
  ##### Download url for Ubuntu 18.04.1 Server  
   http://cdimage.ubuntu.com/releases/18.04.1/release/ubuntu-18.04.1-server-amd64.iso
