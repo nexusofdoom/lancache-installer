@@ -6,10 +6,12 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 #Update packages
+echo "Installing package updates..."
 apt -y update
 apt -y upgrade
 
 #Install required packages
+echo "Installing required updates..."
 apt -y install nginx sniproxy unbound netdata
 
 # Variables you should most likely not touch
@@ -62,6 +64,7 @@ lc_ip_sn=$(echo ${lc_ip} | sed 's:.*/::' )
 ########### Update lancache config folder from github########################################
 cd  /usr/local/lancache
 git clone -b master http://github.com/nexusofdoom/lancache-installer
+echo "Configuring IP Addressing..."
 for service in ${lc_services[@]}; do
 	# Check if the folder exists if not creates it
 	if [ ! -d "/tmp/data/$service" ]; then
@@ -100,19 +103,20 @@ sed -i 's|lc-host-vint|'$if_name'|g' $lc_tmp_yaml
 sed -i 's|127.0.0.1|'$lc_network'|g' $lc_netdata
 
 #for logfolder in ${lc_logfolders[@]}; do
-        # Check if the folder exists if not creates it
- #       if [ ! -d "$lc_base_folder/$folder" ]; then
-                mkdir -p $lc_base_folder/$logfolder
-  #      fi
+	#Check if the folder exists if not creates it
+	#if [ ! -d "$lc_base_folder/$folder" ]; then
+		#mkdir -p $lc_base_folder/$logfolder
+	#fi
 #done
 
 #Disable IPv6
+echo "Disabling IPv6..."
 echo "net.ipv6.conf.all.disable_ipv6=1" > /etc/sysctl.d/disable-ipv6.conf
 sysctl -p /etc/sysctl.d/disable-ipv6.conf
-echo "IPv6 disabled"
 
 ### Change file limits
 #need to get the limits into the /etc/security/limits.conf  * soft nofile  65536 * hard nofile  65536
+echo "Setting security limits..."
 mv /etc/security/limits.conf /etc/security/limits.conf.$TIMESTAMP.bak
 echo '* soft nofile  65536' >> /etc/security/limits.conf
 echo '* hard nofile  65536' >> /etc/security/limits.conf
@@ -132,18 +136,21 @@ cp $lc_base_folder/etc/nginx/nginx.conf $lc_nginx_loc/nginx.conf
 cp -rfv $lc_base_folder/etc/nginx/lancache $lc_nginx_loc
 cp $lc_base_folder/etc/nginx/sites-available/*.conf $lc_nginx_loc/sites-available/
 
-##enable sniproxy and move configs
+#Moving sniproxy configs
+echo "Configuring sniproxy..."
 mv /etc/default/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
 cp $lc_base_folder/etc/default/sniproxy  /etc/default/sniproxy
 mv /etc/sniproxy.conf /etc/sniproxy.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/sniproxy.conf   /etc/sniproxy.conf
 
-# Install unbound
+# Moving unbound configs
+echo "Configuring Unbound..."
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/unbound/unbound.conf   /etc/unbound/unbound.conf
 
 
 # Move hosts and network interface values into place.
+echo "Configuring network interfaces and hosts file..."
 mv /etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml.$TIMESTAMP.bak
 cp $lc_base_folder/etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml
 mv /etc/hosts /etc/hosts.$TIMESTAMP.bak
