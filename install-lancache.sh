@@ -31,6 +31,7 @@ lc_dl_dir=/usr/local/lancache
 lc_network=$( hostname -I | awk '{ print $1 }' )
 lc_gateway=$( route -n | grep 'UG[ \t]' | awk '{print $2}' )
 if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
+lc_hostname=$( hostname )
 TIMESTAMP=$(date +%s)
 
 # Arrays used
@@ -102,6 +103,12 @@ sed -i 's|lc-host-vint|'$if_name'|g' $lc_tmp_yaml
 # This Corrects the loopback to bind to primary IP Address
 sed -i 's|127.0.0.1|'$lc_network'|g' $lc_netdata
 
+# This corrects the hostname pointing to the loopback
+sed -i "s|lc-hostname|$lc_hostname|g" $lc_tmp_hosts
+
+# This corrects lc-host-proxybind with the correct IP
+sed -i "s|lc-host-proxybind|$lc_network|g" $lc_tmp_hosts
+
 #for logfolder in ${lc_logfolders[@]}; do
 	#Check if the folder exists if not creates it
 	#if [ ! -d "$lc_base_folder/$folder" ]; then
@@ -139,14 +146,14 @@ cp $lc_base_folder/etc/nginx/sites-available/*.conf $lc_nginx_loc/sites-availabl
 #Moving sniproxy configs
 echo "Configuring sniproxy..."
 mv /etc/default/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
-cp $lc_base_folder/etc/default/sniproxy  /etc/default/sniproxy
+cp $lc_base_folder/etc/default/sniproxy /etc/default/sniproxy
 mv /etc/sniproxy.conf /etc/sniproxy.conf.$TIMESTAMP.bak
-cp $lc_base_folder/etc/sniproxy.conf   /etc/sniproxy.conf
+cp $lc_base_folder/etc/sniproxy.conf /etc/sniproxy.conf
 
 # Moving unbound configs
 echo "Configuring unbound..."
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.$TIMESTAMP.bak
-cp $lc_base_folder/etc/unbound/unbound.conf   /etc/unbound/unbound.conf
+cp $lc_base_folder/etc/unbound/unbound.conf /etc/unbound/unbound.conf
 
 #Configuring startup services
 echo "Configuring services to run on boot..."
@@ -170,7 +177,6 @@ echo ""
 #if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 
 ### To Do Still
-### Change the proxy bind
 ### Systemd Scripts for everything
 ### ... and stuff I forgot ...
 ### I have no problem with you redistributing this under your own name
