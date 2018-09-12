@@ -144,10 +144,16 @@ mv /etc/sniproxy.conf /etc/sniproxy.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/sniproxy.conf   /etc/sniproxy.conf
 
 # Moving unbound configs
-echo "Configuring Unbound..."
+echo "Configuring unbound..."
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/unbound/unbound.conf   /etc/unbound/unbound.conf
 
+#Configuring startup services
+echo "Configuring services to run on boot..."
+systemctl enable nginx
+systemctl enable sniproxy
+systemctl enable unbound
+systemctl enable netdata
 
 # Move hosts and network interface values into place.
 echo "Configuring network interfaces and hosts file..."
