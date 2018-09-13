@@ -25,4 +25,4 @@ network:
      addresses: [lc-host-pearlabyss]
      gateway4: lc-host-gateway
      nameservers:
-       addresses: [8.8.8.8,8.8.4.4]
+       addresses: [lc-dns1,lc-dns2]
