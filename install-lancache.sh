@@ -5,8 +5,11 @@ if [[ "$EUID" -ne 0 ]]; then
 	exit 1
 fi
 
-#Changeable vairable for lancache directory
+# Changeable variables
+# Leaving defaults is fine
 lc_srv_loc="/srv/lancache"
+lc_dns1="8.8.8.8"
+lc_dns2="4.2.2.2"
 
 # Variables you should most likely not touch
 # Unless you know what you are doing
@@ -44,7 +47,7 @@ declare -a lc_logfolders=(Access Error Keys)
 
 declare -a ip_eth=$(ip link show | grep ens | tr ":" " " | awk '{ print $2 }')
 for int in ${ip_eth[@]}; do
-	inet_eth=$(ip route get 8.8.8.8 | tr " " " " | awk '{ print $5 }' )
+	inet_eth=$(ip route get $lc_dns1 | tr " " " " | awk '{ print $5 }' )
 	if [[ "$inet_eth" == "$int" ]]; then
 		lc_ip_eth=$int
 	fi
@@ -145,6 +148,17 @@ mkdir $lc_srv_loc
 mkdir -p ${lc_srv_loc}/data/{microsoft,installs,other,tmp,hirez,origin,riot,gog,sony,steam,wargaming,arenanetworks,uplay,glyph,zenimax,digitalextremes,pearlabyss}
 mkdir -p ${lc_srv_loc}/logs/{Errors,Keys,Access}
 chown -R www-data:www-data $lc_srv_loc
+
+# Setting specified DNS Servers
+echo "Setting specified DNS Servers..."
+sed -i "s|lc-dns1|$lc_dns1|g" $lc_base_folder/etc/nginx/nginx.conf
+sed -i "s|lc-dns2|$lc_dns2|g" $lc_base_folder/etc/nginx/nginx.conf
+sed -i "s|lc-dns1|$lc_dns1|g" $lc_base_folder/etc/nginx/lancache/resolver
+sed -i "s|lc-dns2|$lc_dns2|g" $lc_base_folder/etc/nginx/lancache/resolver
+sed -i "s|lc-dns1|$lc_dns1|g" $lc_tmp_yaml
+sed -i "s|lc-dns2|$lc_dns2|g" $lc_tmp_yaml
+sed -i "s|lc-dns1|$lc_dns1|g" $lc_tmp_unbound
+sed -i "s|lc-dns1|$lc_dns1|g" /etc/sniproxy.conf
 
 ## Change the Proxy Bind in Lancache Configs
 sed -i 's|lc-host-proxybind|'$lc_network'|g' $lc_base_folder/etc/nginx/sites-available/*.conf
