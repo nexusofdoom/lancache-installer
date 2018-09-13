@@ -165,7 +165,8 @@ sed -i "s|lc-dns2|$lc_dns2|g" $lc_base_folder/etc/nginx/lancache/resolver
 sed -i "s|lc-dns1|$lc_dns1|g" $lc_tmp_yaml
 sed -i "s|lc-dns2|$lc_dns2|g" $lc_tmp_yaml
 sed -i "s|lc-dns1|$lc_dns1|g" $lc_tmp_unbound
-sed -i "s|lc-dns1|$lc_dns1|g" /etc/sniproxy.conf
+sed -i "s|lc-dns2|$lc_dns2|g" $lc_tmp_unbound
+sed -i "s|lc-dns1|$lc_dns1|g" $lc_base_folder/etc/sniproxy.conf
 
 ## Change the Proxy Bind in Lancache Configs
 sed -i 's|lc-host-proxybind|'$lc_network'|g' $lc_base_folder/etc/nginx/sites-available/*.conf
