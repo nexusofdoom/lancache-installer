@@ -5,14 +5,8 @@ if [ "$EUID" -ne 0 ]; then
 	exit
 fi
 
-#Update packages
-echo "Installing package updates..."
-apt -y update
-apt -y upgrade
-
-#Install required packages
-echo "Installing required updates..."
-apt -y install nginx sniproxy unbound netdata
+#Changeable vairable for lancache directory
+lc_srv_loc="/srv/lancache"
 
 # Variables you should most likely not touch
 # Unless you know what you are doing
@@ -23,7 +17,6 @@ lc_tmp_ip=/tmp/services_ips.txt
 lc_tmp_unbound=$lc_base_folder/etc/unbound/unbound.conf
 lc_tmp_hosts=$lc_base_folder/etc/hosts
 lc_nginx_loc=/etc/nginx
-lc_srv_loc=/srv/lancache
 lc_unbound_loc=/etc/unbound
 lc_tmp_yaml=$lc_base_folder/etc/netplan/01-netcfg.yaml
 lc_netdata=/etc/netdata/netdata.conf
@@ -33,6 +26,15 @@ lc_gateway=$( route -n | grep 'UG[ \t]' | awk '{print $2}' )
 if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 lc_hostname=$( hostname )
 TIMESTAMP=$(date +%s)
+
+#Update packages
+echo "Installing package updates..."
+apt -y update
+apt -y upgrade
+
+#Install required packages
+echo "Installing required updates..."
+apt -y install nginx sniproxy unbound netdata
 
 # Arrays used
 # Services used and set ip for and created the lancache folders for
@@ -129,10 +131,11 @@ echo '* soft nofile  65536' >> /etc/security/limits.conf
 echo '* hard nofile  65536' >> /etc/security/limits.conf
 
 # Change Ownership of folders
-mkdir /srv/lancache
-mkdir -p /srv/lancache/data/{microsoft,installs,other,tmp,hirez,origin,riot,gog,sony,steam,wargaming,arenanetworks,uplay,glyph,zenimax,digitalextremes,pearlabyss}
-mkdir -p /srv/lancache/logs/{Errors,Keys,Access}
-chown -R www-data:www-data /srv/lancache
+echo "Adding lancache directory structure..."
+mkdir $lc_srv_loc
+mkdir -p ${lc_srv_loc}/data/{microsoft,installs,other,tmp,hirez,origin,riot,gog,sony,steam,wargaming,arenanetworks,uplay,glyph,zenimax,digitalextremes,pearlabyss}
+mkdir -p ${lc_srv_loc}/logs/{Errors,Keys,Access}
+chown -R www-data:www-data $lc_srv_loc
 
 ## Change the Proxy Bind in Lancache Configs
 sed -i 's|lc-host-proxybind|'$lc_network'|g' $lc_base_folder/etc/nginx/sites-available/*.conf
