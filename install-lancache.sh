@@ -1,7 +1,7 @@
 #!/bin/bash
-# Following Checks if you run as ROOT or not
-if [[ "$EUID" -ne 0 ]]; then 
-	echo "Please run as sudo"
+# Following checks if you're running as root or not
+if [[ "$EUID" -ne 0 ]]; then
+	echo "Please run with sudo or as root."
 	exit 1
 fi
 
@@ -28,12 +28,12 @@ if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 lc_hostname=$(hostname)
 TIMESTAMP=$(date +%s)
 
-#Update packages
+# Update packages
 echo "Installing package updates..."
 apt -y update
 apt -y upgrade
 
-#Install required packages
+# Install required packages
 echo "Installing required updates..."
 apt -y install nginx sniproxy unbound netdata
 
@@ -54,19 +54,19 @@ for int in ${ip_eth[@]}; do
 done
 
 lc_ip=$(/bin/ip -4 addr show $lc_ip_eth | grep -oP "(?<=inet ).*(?=br)")
-#1st octet
+# 1st octet
 lc_ip_p1=$(echo ${lc_ip} | tr "." " " | awk '{ print $1 }')
-#2nd octet
+# 2nd octet
 lc_ip_p2=$(echo ${lc_ip} | tr "." " " | awk '{ print $2 }')
-#3rd octet
+# 3rd octet
 lc_ip_p3=$(echo ${lc_ip} | tr "." " " | awk '{ print $3 }')
-#4th octet
+# 4th octet
 lc_ip_p4=$(echo ${lc_ip} | tr "." " " | awk '{ print $4 }' | cut -f1 -d "/")
-#Subnet
+# Subnet
 lc_ip_sn=$(echo ${lc_ip} | sed 's:.*/::' )
 
 ########### Update lancache config folder from github########################################
-#Chcecking to see if directory exists before attempting to remove and add to prevent bash errors
+# Chcecking to see if directory exists before attempting to remove and add to prevent bash errors
 if [[ -d $lc_base_folder ]]; then
 	echo "Removing old lancache install directory..."
 	rm -rfv $lc_base_folder
@@ -95,7 +95,7 @@ for service in ${lc_services[@]}; do
 	# This Changes the Unbound File with the correct IP Adresses
 	sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_unbound
 
-	#This Corrects the Host File For The Gameservices
+	# This Corrects the Host File For The Gameservices
 	sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_hosts
 
 	# This Corrects the Host File For The Netplan
@@ -130,13 +130,13 @@ sed -i "s|lc-host-proxybind|$lc_network|g" $lc_tmp_hosts
 	#fi
 #done
 
-#Disable IPv6
+# Disable IPv6
 echo "Disabling IPv6..."
 echo "net.ipv6.conf.all.disable_ipv6=1" > /etc/sysctl.d/disable-ipv6.conf
 sysctl -p /etc/sysctl.d/disable-ipv6.conf
 
 ### Change file limits
-#need to get the limits into the /etc/security/limits.conf  * soft nofile  65536 * hard nofile  65536
+# Need to get the limits into the /etc/security/limits.conf  * soft nofile  65536 * hard nofile  65536
 echo "Setting security limits..."
 mv /etc/security/limits.conf /etc/security/limits.conf.$TIMESTAMP.bak
 echo '* soft nofile  65536' >> /etc/security/limits.conf
@@ -156,6 +156,11 @@ do
 done
 chown -R www-data:www-data $lc_srv_loc
 
+# Setting the directory path for lancache
+echo "Configuring lancache directory structure in nginx..."
+sed -i "s|lc-srv-loc|$lc_srv_loc|g" $lc_base_folder/etc/nginx/sites-available/*.conf
+sed -i "s|lc-srv-loc|$lc_srv_loc|g" $lc_base_folder/etc/nginx/lancache/caches
+
 # Setting specified DNS Servers
 echo "Setting specified DNS Servers..."
 sed -i "s|lc-dns1|$lc_dns1|g" $lc_base_folder/etc/nginx/nginx.conf
@@ -168,16 +173,19 @@ sed -i "s|lc-dns1|$lc_dns1|g" $lc_tmp_unbound
 sed -i "s|lc-dns2|$lc_dns2|g" $lc_tmp_unbound
 sed -i "s|lc-dns1|$lc_dns1|g" $lc_base_folder/etc/sniproxy.conf
 
-## Change the Proxy Bind in Lancache Configs
+# Change the Proxy Bind in Lancache Configs
+echo "Setting Proxy Bind address in lancache configs..."
 sed -i 's|lc-host-proxybind|'$lc_network'|g' $lc_base_folder/etc/nginx/sites-available/*.conf
-## Doing the necessary changes for Lancache
+
+# Moving nginx configs
+echo "Configuring nginx..."
 mv $lc_nginx_loc/nginx.conf $lc_nginx_loc/nginx.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/nginx/nginx.conf $lc_nginx_loc/nginx.conf
 #mkdir -p $lc_nginx_loc/conf/lancache
 cp -rfv $lc_base_folder/etc/nginx/lancache $lc_nginx_loc
 cp $lc_base_folder/etc/nginx/sites-available/*.conf $lc_nginx_loc/sites-available/
 
-#Moving sniproxy configs
+# Moving sniproxy configs
 echo "Configuring sniproxy..."
 mv /etc/default/sniproxy /etc/default/sniproxy.$TIMESTAMP.bak
 cp $lc_base_folder/etc/default/sniproxy /etc/default/sniproxy
@@ -189,7 +197,7 @@ echo "Configuring unbound..."
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/unbound/unbound.conf /etc/unbound/unbound.conf
 
-#Configuring startup services
+# Configuring startup services
 echo "Configuring services to run on boot..."
 systemctl enable nginx
 systemctl enable sniproxy
