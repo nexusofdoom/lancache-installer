@@ -43,7 +43,7 @@ declare -a lc_services=(arena apple blizzard hirez gog glyph microsoft origin ri
 # Installer Folders
 declare -a lc_folders=(config data logs temp)
 # Log Folders
-declare -a lc_logfolders=(Access Error Keys)
+declare -a lc_logfolders=(access error keys)
 
 declare -a ip_eth=$(ip link show | grep ens | tr ":" " " | awk '{ print $2 }')
 for int in ${ip_eth[@]}; do
@@ -143,10 +143,17 @@ echo '* soft nofile  65536' >> /etc/security/limits.conf
 echo '* hard nofile  65536' >> /etc/security/limits.conf
 
 # Change Ownership of folders
-echo "Adding lancache directory structure..."
+echo "Adding lancache directory structure and setting permissions..."
 mkdir $lc_srv_loc
-mkdir -p ${lc_srv_loc}/data/{microsoft,installs,other,tmp,hirez,origin,riot,gog,sony,steam,wargaming,arenanetworks,uplay,glyph,zenimax,digitalextremes,pearlabyss}
-mkdir -p ${lc_srv_loc}/logs/{Errors,Keys,Access}
+for i in ${lc_services[@]}
+do
+	mkdir -p ${lc_srv_loc}/data/${i}
+done
+
+for i in ${lc_logfolders[@]}
+do
+	mkdir -p ${lc_srv_loc}/logs/${i}
+done
 chown -R www-data:www-data $lc_srv_loc
 
 # Setting specified DNS Servers

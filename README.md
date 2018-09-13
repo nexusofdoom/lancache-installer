@@ -18,7 +18,7 @@ Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [Nex
 # Run scripts with sudo
 
 ### Run 
- `./install-lancache.sh`
+ `sudo ./install-lancache.sh`
  
 ##########################################################################
  
