@@ -30,7 +30,13 @@ TIMESTAMP=$(date +%s)
 
 # Update packages
 echo "Installing package updates..."
-apt -y update
+universeCheck=$(apt-cache policy |grep universe)
+if [[ -z $universe ]]; then
+	echo "Adding universe repository..."
+	apt-add-repository universe
+else
+	apt -y update
+fi
 apt -y upgrade
 
 # Install required packages
