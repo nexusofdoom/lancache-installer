@@ -5,11 +5,15 @@ if [[ "$EUID" -ne 0 ]]; then
 	exit 1
 fi
 
-# Changeable variables
-# Leaving defaults is fine
+# Changeable variables, leaving the defaults is fine
+# File path for lancache
 lc_srv_loc="/srv/lancache"
+# Primary DNS Server
 lc_dns1="8.8.8.8"
+# Secondary DNS Server
 lc_dns2="4.2.2.2"
+# Proxy cache size, measued in Megabytes (MB). Default is 500GB
+lc_max_size="500000m"
 
 # Variables you should most likely not touch
 # Unless you know what you are doing
@@ -31,7 +35,7 @@ TIMESTAMP=$(date +%s)
 # Update packages
 echo "Installing package updates..."
 universeCheck=$(apt-cache policy |grep universe)
-if [[ -z $universe ]]; then
+if [[ -z $universeCheck ]]; then
 	echo "Adding universe repository..."
 	apt-add-repository universe
 else
@@ -166,6 +170,10 @@ chown -R www-data:www-data $lc_srv_loc
 echo "Configuring lancache directory structure in nginx..."
 sed -i "s|lc-srv-loc|$lc_srv_loc|g" $lc_base_folder/etc/nginx/sites-available/*.conf
 sed -i "s|lc-srv-loc|$lc_srv_loc|g" $lc_base_folder/etc/nginx/lancache/caches
+
+# Setting the max_size limit for eache cache
+echo "Configuring proxy cache size..."
+sed -i "s|lc-max-size|$lc_max_size|g" $lc_base_folder/etc/nginx/lancache/caches
 
 # Setting specified DNS Servers
 echo "Setting specified DNS Servers..."
