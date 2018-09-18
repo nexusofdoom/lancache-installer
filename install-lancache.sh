@@ -53,7 +53,7 @@ declare -a lc_services=(arena apple blizzard hirez gog glyph microsoft origin ri
 # Installer Folders
 declare -a lc_folders=(config data logs temp)
 # Log Folders
-declare -a lc_logfolders=(access error keys)
+declare -a lc_logfolders=(access errors keys)
 
 declare -a ip_eth=$(ip link show | grep ens | tr ":" " " | awk '{ print $2 }')
 for int in ${ip_eth[@]}; do
