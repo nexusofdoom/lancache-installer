@@ -26,6 +26,7 @@ lc_tmp_yaml="$lc_base_folder/etc/netplan/01-netcfg.yaml"
 lc_nginx_loc="/etc/nginx"
 lc_unbound_loc="/etc/unbound"
 lc_netdata="/etc/netdata/netdata.conf"
+lc_nginx_systemd="/etc/systemd/system/nginx.service"
 lc_network=$(hostname -I | awk '{ print $1 }')
 lc_gateway=$(route -n | grep 'UG[ \t]' | awk '{print $2}')
 if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
