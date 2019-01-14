@@ -214,6 +214,7 @@ cp $lc_base_folder/etc/unbound/unbound.conf /etc/unbound/unbound.conf
 # Configuring startup services
 echo "Configuring services to run on boot..."
 systemctl enable nginx
+systemctl enable nginx.service
 systemctl enable sniproxy
 systemctl enable unbound
 systemctl enable netdata
