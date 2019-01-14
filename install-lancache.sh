@@ -42,7 +42,7 @@ if [[ -z $universeCheck ]]; then
 else
 	apt -y update
 fi
-apt -y upgrade
+#apt -y upgrade
 
 # Install required packages
 echo "Installing required updates..."
