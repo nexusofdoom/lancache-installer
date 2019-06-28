@@ -13,7 +13,6 @@
 lc-host-proxybind lancache-eth
 
 #The Following are Virtual IP's used by Lancache
-lc-host-steam lancache-steam
 lc-host-steam lancache-steamA
 lc-host-steam lancache-steamB
 lc-host-steam lancache-steamC
@@ -23,6 +22,7 @@ lc-host-steam lancache-steamF
 lc-host-steam lancache-steamG
 lc-host-steam lancache-steamH
 lc-host-steam lancache-steamI
+lc-host-steam lancache-steamJ
 lc-host-riot lancache-riot
 lc-host-blizzard lancache-blizzard
 lc-host-hirez lancache-hirez
