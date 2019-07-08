@@ -43,7 +43,7 @@ else
 	apt -y update
 fi
 apt -y upgrade
-apt -y dist-upgrade
+#apt -y dist-upgrade
 
 # Install required packages
 echo "Installing required updates..."
