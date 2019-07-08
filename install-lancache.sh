@@ -99,14 +99,15 @@ for service in ${lc_services[@]}; do
 		mkdir -p /tmp/data/$service
 	fi
 
-
-# Increases the IP with Every Run
-		lc_ip_p4=$(expr $lc_ip_p4 + 1)
 	#new stuff TTE - CARl LOOP
-	
-	sed  -i '0,/lc-host-'$service'/s//'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/' "$lc_tmp_hosts"
-	
-	
+	while grep -q "lc-host-${service}" "${lc_tmp_hosts}" >> /dev/null
+	do
+		# Increases the IP with Every Run
+		lc_ip_p4=$(expr $lc_ip_p4 + 1)
+
+		#new stuff TTE - CARl LOOP
+		sed  -i '0,/lc-host-'$service'/s//'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/' "$lc_tmp_hosts"
+	done	
 done
 
 
