@@ -52,6 +52,7 @@ apt -y install nginx sniproxy unbound netdata
 # Arrays used
 # Services used and set ip for and created the lancache folders for
 declare -a lc_services=(arena apple blizzard hirez gog glyph microsoft origin riot steam sony enmasse wargaming uplay zenimax digitalextremes pearlabyss)
+#declare -a lc_exclude_unbound=(steam)
 # Installer Folders
 declare -a lc_folders=(config data logs temp)
 # Log Folders
@@ -98,20 +99,75 @@ for service in ${lc_services[@]}; do
 		mkdir -p /tmp/data/$service
 	fi
 
+
+# Increases the IP with Every Run
+		lc_ip_p4=$(expr $lc_ip_p4 + 1)
+	#new stuff TTE - CARl LOOP
+	
+	sed  -i '0,/lc-host-'$service'/s//'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/' "$lc_tmp_hosts"
+	
+	
+done
+
+
+# Return each line of the file.. Seem by default it trims space/tabs
+while read line; do
+
+	# skip line if substring doesn't exist in line
+	if [[ $line != *"lancache-"* ]] ; then continue; fi
+	
+	#Repalce all tabs and spaces with a single space per line
+	cleanLine=$(echo "$line" | tr -s '[:blank:]')
+	
+	# Search and replace array
+	#Split string into array base off space
+	#array[0]=192.168.x.x
+	#array[1}=lc-lancache-steamA
+	sar=($(echo "$line" | tr ' ' '\n'))
+	
+	# If array is NOT size two then skip
+	# WARNING - Yes the # does need be there!
+	if [[ "${#sar[@]}" -ne 2 ]] ; then continue; fi
+	
+	# Replace 
+	# WARNING - When using variable need use double quote (not a single quote)
+	IPAddress=${sar[0]}
+	hostName=${sar[1]}
+	# Repalce lancache with lc-host.. So lc-lancache-steamA with lc-host-steamA
+	IP_Name=${hostName/lancache/lc-host}
+	
+	# Search all lc-host-'server' and replace the IP address
+	# WARNING - When using variable need use double quote (not a single quote)
+	# Update services with correct ip address for DNS for clients
+	sed -i "s|${IP_Name}|${IPAddress}|gI" "$lc_tmp_unbound"
+	
+	# May want to replace with Replace ONLY first matching file
+	# This Changes the yaml File with the correct IP Adresses for services
+	sed -i "s|${IP_Name}|${IPAddress}/${lc_ip_sn}|gI" "$lc_tmp_yaml"
+	
+	
+	
+	
+done <"$lc_tmp_hosts"
+
+
+
+
+
 	# Increases the IP with Every Run
-	lc_ip_p4=$(expr $lc_ip_p4 + 1)
+	#lc_ip_p4=$(expr $lc_ip_p4 + 1)
 	# Writes the IP to A File to use it later on as Array
 	# This for Netplan later on
-	echo $lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4/$lc_ip_sn >> "$lc_tmp_ip"
+	#echo $lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4/$lc_ip_sn >> "$lc_tmp_ip"
 
 	# This Changes the Unbound File with the correct IP Adresses
-	sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_unbound
+	#sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_unbound
 
 	# This Corrects the Host File For The Gameservices
-	sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_hosts
+	#sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_hosts
 
 	# This Corrects the Host File For The Netplan
-	sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/'$lc_ip_sn'|g' $lc_tmp_yaml
+	#sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/'$lc_ip_sn'|g' $lc_tmp_yaml
 done
 
 # This Changes the Unbound File with the correct IP Adresses for lc-host-ip
