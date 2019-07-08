@@ -145,30 +145,7 @@ while read line; do
 	# This Changes the yaml File with the correct IP Adresses for services
 	sed -i "s|${IP_Name}|${IPAddress}/${lc_ip_sn}|gI" "$lc_tmp_yaml"
 	
-	
-	
-	
 done <"$lc_tmp_hosts"
-
-
-
-
-
-	# Increases the IP with Every Run
-	#lc_ip_p4=$(expr $lc_ip_p4 + 1)
-	# Writes the IP to A File to use it later on as Array
-	# This for Netplan later on
-	#echo $lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4/$lc_ip_sn >> "$lc_tmp_ip"
-
-	# This Changes the Unbound File with the correct IP Adresses
-	#sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_unbound
-
-	# This Corrects the Host File For The Gameservices
-	#sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'|g' $lc_tmp_hosts
-
-	# This Corrects the Host File For The Netplan
-	#sed -i 's|lc-host-'$service'|'$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_ip_p4'/'$lc_ip_sn'|g' $lc_tmp_yaml
-done
 
 # This Changes the Unbound File with the correct IP Adresses for lc-host-ip
 sed -i 's|lc-host-ip|'$lc_network'|g' $lc_tmp_unbound
