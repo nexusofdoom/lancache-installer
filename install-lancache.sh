@@ -42,8 +42,8 @@ if [[ -z $universeCheck ]]; then
 else
 	apt -y update
 fi
-#apt -y upgrade
-#apt -y dist-upgrade
+apt -y upgrade
+apt -y dist-upgrade
 
 # Install required packages
 echo "Installing required updates..."
