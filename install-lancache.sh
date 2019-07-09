@@ -261,6 +261,9 @@ cp $lc_base_folder/etc/unbound/unbound.conf /etc/unbound/unbound.conf
 echo "DNSStubListener=yes" >> /etc/systemd/resolved.conf 
 echo "search local" >> /etc/resolve.conf
 echo "nameserver 8.8.8.8" >> /etc/resolve.conf
+#sudo systemctl disable systemd-resolved.service
+#sudo systemctl stop systemd-resolved
+#rm /etc/resolv.conf
 
 # Configuring startup services
 echo "Configuring services to run on boot..."
