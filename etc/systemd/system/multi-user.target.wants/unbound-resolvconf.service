@@ -1,0 +1,13 @@
+[Unit]
+Description=Unbound DNS server via resolvconf
+After=unbound.service
+PartOf=unbound.service
+ConditionFileIsExecutable=/sbin/resolvconf
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/lib/unbound/package-helper resolvconf_start
+ExecStop=/usr/lib/unbound/package-helper resolvconf_stop
+
+[Install]
+WantedBy=unbound.service
