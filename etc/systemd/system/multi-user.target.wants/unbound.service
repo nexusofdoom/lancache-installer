@@ -1,9 +1,8 @@
 [Unit]
 Description=Unbound DNS server
 Documentation=man:unbound(8)
-After=network.target
-Before=nss-lookup.target
-Wants=nss-lookup.target
+After=network-online.target nss-lookup.target
+Wants=network-online.target
 
 [Service]
 Type=notify
