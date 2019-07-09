@@ -253,6 +253,7 @@ systemctl enable netdata
 
 #Fix Unbound startup service 
 cp $lc_dl_dir/lancache-installer/etc/systemd/system/multi-user.target.wants/unbound.service /etc/systemd/system/multi-user.target.wants/unbound.service
+systemctl daemon-reload
 
 # Move hosts and network interface values into place.
 echo "Configuring network interfaces and hosts file..."
