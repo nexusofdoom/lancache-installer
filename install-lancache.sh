@@ -181,9 +181,9 @@ sed -i "s|lc-host-proxybind|$lc_network|g" $lc_tmp_hosts
 #echo "net.ipv6.conf.all.disable_ipv6=1" > /etc/sysctl.d/disable-ipv6.conf
 #sysctl -p /etc/sysctl.d/disable-ipv6.conf
 #New Disable IPv6 Ubuntu 
-echo "net.ipv6.conf.all.disable_ipv6 = 1" >  /etc/sysctl.d/99-sysctl.conf
-echo "net.ipv6.conf.default.disable_ipv6 = 1" >  /etc/sysctl.d/99-sysctl.conf
-echo "net.ipv6.conf.lo.disable_ipv6 = 1" >  /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv6.conf.all.disable_ipv6 = 1" >>  /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv6.conf.default.disable_ipv6 = 1" >>  /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv6.conf.lo.disable_ipv6 = 1" >>  /etc/sysctl.d/99-sysctl.conf
 sudo sysctl -p
 #Is IPv6 disabled?
 echo "IPv6 is disabled if value is 1"
@@ -258,9 +258,9 @@ echo "Configuring unbound..."
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/unbound/unbound.conf /etc/unbound/unbound.conf
 #Disable Systemd.resolve so unbound can start 
-echo "DNSStubListener=yes" > /etc/systemd/resolved.conf 
-echo "search local" > /etc/resolve.conf
-echo "nameserver 8.8.8.8" > /etc/resolve.conf
+echo "DNSStubListener=yes" >> /etc/systemd/resolved.conf 
+echo "search local" >> /etc/resolve.conf
+echo "nameserver 8.8.8.8" >> /etc/resolve.conf
 
 # Configuring startup services
 echo "Configuring services to run on boot..."
