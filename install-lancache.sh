@@ -257,6 +257,10 @@ cp $lc_base_folder/etc/sniproxy.conf /etc/sniproxy.conf
 echo "Configuring unbound..."
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/unbound/unbound.conf /etc/unbound/unbound.conf
+#Disable Systemd.resolve so unbound can start 
+echo "DNSStubListener=yes" > /etc/systemd/resolved.conf 
+echo "search local" > /etc/resolve.conf
+echo "nameserver 8.8.8.8" > /etc/resolve.conf
 
 # Configuring startup services
 echo "Configuring services to run on boot..."
