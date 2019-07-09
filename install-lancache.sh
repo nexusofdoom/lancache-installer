@@ -251,6 +251,9 @@ systemctl enable sniproxy
 systemctl enable unbound
 systemctl enable netdata
 
+#Fix Unbound startup service 
+cp $lc_dl_dir/lancache-installer/etc/systemd/system/multi-user.target.wants/unbound.service /etc/systemd/system/multi-user.target.wants/unbound.service
+
 # Move hosts and network interface values into place.
 echo "Configuring network interfaces and hosts file..."
 mv /etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml.$TIMESTAMP.bak
