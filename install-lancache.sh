@@ -177,9 +177,20 @@ sed -i "s|lc-host-proxybind|$lc_network|g" $lc_tmp_hosts
 #done
 
 # Disable IPv6
-echo "Disabling IPv6..."
-echo "net.ipv6.conf.all.disable_ipv6=1" > /etc/sysctl.d/disable-ipv6.conf
-sysctl -p /etc/sysctl.d/disable-ipv6.conf
+#echo "Disabling IPv6..."
+#echo "net.ipv6.conf.all.disable_ipv6=1" > /etc/sysctl.d/disable-ipv6.conf
+#sysctl -p /etc/sysctl.d/disable-ipv6.conf
+#New Disable IPv6 Ubuntu 
+echo "net.ipv6.conf.all.disable_ipv6 = 1" >  /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv6.conf.default.disable_ipv6 = 1" >  /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv6.conf.lo.disable_ipv6 = 1" >  /etc/sysctl.d/99-sysctl.conf
+sudo sysctl -p
+#Is IPv6 disabled?
+echo "IPv6 is disabled if value is 1"
+cat /proc/sys/net/ipv6/conf/all/disable_ipv6
+echo "IPv6 enabled if returns any IPv6 address"
+ip a | grep inet6
+
 
 ### Change file limits
 # Need to get the limits into the /etc/security/limits.conf  * soft nofile  65536 * hard nofile  65536
