@@ -233,6 +233,7 @@ mv $lc_nginx_loc/nginx.conf $lc_nginx_loc/nginx.conf.$TIMESTAMP.bak
 cp $lc_base_folder/etc/nginx/nginx.conf $lc_nginx_loc/nginx.conf
 #mkdir -p $lc_nginx_loc/conf/lancache
 cp -rfv $lc_base_folder/etc/nginx/lancache $lc_nginx_loc
+mkdir $lc_nginx_loc/sites-available/
 cp $lc_base_folder/etc/nginx/sites-available/*.conf $lc_nginx_loc/sites-available/
 cp $lc_dl_dir/lancache-installer/etc/systemd/system/nginx.service $lc_nginx_systemd
 # Moving sniproxy configs
