@@ -32,6 +32,7 @@ network:
      addresses: [lc-host-zenimax]
      addresses: [lc-host-digitalextremes]
      addresses: [lc-host-pearlabyss]
+     addresses: [lc-host-epicgames]
      gateway4: lc-host-gateway
      nameservers:
        addresses: [lc-dns1,lc-dns2]
