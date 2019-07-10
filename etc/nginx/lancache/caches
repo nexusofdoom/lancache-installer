@@ -27,3 +27,6 @@ proxy_cache_path lc-srv-loc/data/gog levels=2:2 keys_zone=gog:500m inactive=120d
 
 #Based of Steamcache CDN Uplay
 proxy_cache_path lc-srv-loc/data/uplay levels=2:2 keys_zone=uplay:500m inactive=120d max_size=lc-max-size loader_files=1000 loader_sleep=50ms loader_threshold=300ms;
+
+# EPIC Games by Lancache.net / UKLANS
+proxy_cache_path lc-srv-loc/data/epicgames levels=2:2 keys_zone=epicgames:500m inactive=120d max_size=75000m loader_files=1000 loader_sleep=50ms loader_threshold=300ms;
