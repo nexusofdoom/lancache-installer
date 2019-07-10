@@ -56,7 +56,7 @@ apt -y install nginx sniproxy unbound netdata
 
 # Arrays used
 # Services used and set ip for and created the lancache folders for
-declare -a lc_services=(arena apple blizzard hirez gog glyph microsoft origin riot steam sony enmasse wargaming uplay zenimax digitalextremes pearlabyss)
+declare -a lc_services=(arena apple blizzard hirez gog glyph microsoft origin riot steam sony enmasse wargaming uplay zenimax digitalextremes pearlabyss epicgames)
 #declare -a lc_exclude_unbound=(steam)
 # Installer Folders
 declare -a lc_folders=(config data logs temp)
