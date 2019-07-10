@@ -7,7 +7,7 @@ Improve download speeds and reduce strain on your Internet connection at LAN par
  ##### Download url for Ubuntu 18.04.1 Server  
     http://old-releases.ubuntu.com/releases/18.04.0/ubuntu-18.04.1-server-amd64.iso
  
- ##### You will need 26 avaliable IP's example 192.168.0.2 - 192.168.0.28 used for lancache
+ ##### You will need 36 avaliable IP's example 192.168.0.2 - 192.168.0.38 used for lancache
  
  
 # Clone the git repo
