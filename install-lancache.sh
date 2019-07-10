@@ -42,8 +42,13 @@ if [[ -z $universeCheck ]]; then
 else
 	apt -y update
 fi
-#apt -y upgrade
-#apt -y dist-upgrade
+apt -y upgrade
+apt -y dist-upgrade
+
+#Adding Nginx repository for newer NGINX
+curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+echo "deb [arch=amd64] https://nginx.org/packages/mainline/ubuntu/ `lsb_release -cs` nginx" > /etc/apt/sources.list.d/nginx.list
+echo "deb-src https://nginx.org/packages/mainline/ubuntu/ `lsb_release -cs` nginx" >> /etc/apt/sources.list.d/nginx.list
 
 # Install required packages
 echo "Installing required updates..."
