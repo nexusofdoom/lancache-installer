@@ -43,7 +43,7 @@ else
 	apt -y update
 fi
 apt -y upgrade
-apt -y dist-upgrade
+#apt -y dist-upgrade
 
 #Adding Nginx repository for newer NGINX
 curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
