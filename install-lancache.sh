@@ -59,7 +59,7 @@ apt -y upgrade
 
 # Install required packages
 echo "Installing required updates..."
-apt -y install nginx sniproxy unbound nmon netdata
+apt -y install nginx sniproxy unbound nmon httpry netdata
 
 # Arrays used
 # Services used and set ip for and created the lancache folders for
