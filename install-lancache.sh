@@ -11,7 +11,7 @@ lc_srv_loc="/srv/lancache"
 # Primary DNS Server
 lc_dns1="8.8.8.8"
 # Secondary DNS Server
-lc_dns2="4.2.2.2"
+lc_dns2="1.1.1.1"
 # Proxy cache size, measued in Megabytes (MB). Default is 500GB
 lc_max_size="500000m"
 
@@ -33,10 +33,17 @@ if_name=$(ifconfig | grep flags | awk -F: '{print $1;}' | grep -Fvx -e lo)
 lc_hostname=$(hostname)
 TIMESTAMP=$(date +%s)
 
-#Adding Nginx repository for newer NGINX
-curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
-echo "deb [arch=amd64] https://nginx.org/packages/mainline/ubuntu/ `lsb_release -cs` nginx" > /etc/apt/sources.list.d/nginx.list
-echo "deb-src https://nginx.org/packages/mainline/ubuntu/ `lsb_release -cs` nginx" >> /etc/apt/sources.list.d/nginx.list
+# Chcecking to see if NGINX repository already in system.
+if [[ -d /etc/apt/sources.list.d/nginx.list ]]; then
+	echo "Nginx Repository Already Added to System..."
+	
+else
+ 	echo "Adding NGINX repository to Ubuntu repository"
+ 	curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+ 	echo "deb [arch=amd64] https://nginx.org/packages/mainline/ubuntu/ `lsb_release -cs` nginx" > /etc/apt/sources.list.d/nginx.list
+ 	echo "deb-src https://nginx.org/packages/mainline/ubuntu/ `lsb_release -cs` nginx" >> /etc/apt/sources.list.d/nginx.list
+
+fi
 
 # Update packages
 echo "Installing package updates..."
@@ -52,7 +59,7 @@ apt -y upgrade
 
 # Install required packages
 echo "Installing required updates..."
-apt -y install nginx sniproxy unbound netdata
+apt -y install nginx sniproxy unbound nmon httpry netdata
 
 # Arrays used
 # Services used and set ip for and created the lancache folders for
