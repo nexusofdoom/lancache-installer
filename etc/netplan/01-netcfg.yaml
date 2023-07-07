@@ -33,7 +33,7 @@ network:
      addresses: [lc-host-microsoft]
      addresses: [lc-host-enmasse]
      addresses: [lc-host-gog]
-     addresses: [lc-host-arena]
+     addresses: [lc-host-arenanetworks]
      addresses: [lc-host-apple]
      addresses: [lc-host-wargaming]
      addresses: [lc-host-uplay]
